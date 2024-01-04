@@ -149,6 +149,7 @@ class ecmbBuilder(ecmbBuilderBase):
         if type(meta_data.get('publisher')) == dict and meta_data['publisher'].get('name'):
             book.metadata.set_publisher(meta_data['publisher'].get('name'), href = meta_data['publisher'].get('href'))
         book.metadata.set_summary(meta_data.get('summary'))
+        book.metadata.set_pages(meta_data.get('pages'))
         book.metadata.set_notes(meta_data.get('notes'))
 
         if type(meta_data.get('genres')) == list:

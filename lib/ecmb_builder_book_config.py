@@ -183,16 +183,19 @@ class ecmbBuilderBookConfig():
         self._book_title = config['required'].get('title')
 
         # remove default_values
-        if type(config.get('optional')) == dict:
-            warnings = ecmbUtils.enum_values(CONTENT_WARNING)
-            if config['optional'].get('publishdate') == '0000-00-00|0000':
-                config['optional']['publishdate'] = ''
-            
-            if type(config['optional'].get('warnings')) != list or (
-                '|'.join(config['optional'].get('warnings')) == '|'.join(warnings)):
-                config['optional']['warnings'] = None
-        else: 
+        if type(config.get('optional')) != dict:
             config['optional'] = {}
+
+        if config['optional'].get('pages') == 0:
+            config['optional']['pages'] = None
+
+        warnings = ecmbUtils.enum_values(CONTENT_WARNING)
+        if config['optional'].get('publishdate') == '0000-00-00|0000':
+            config['optional']['publishdate'] = ''
+        
+        if type(config['optional'].get('warnings')) != list or (
+            '|'.join(config['optional'].get('warnings')) == '|'.join(warnings)):
+            config['optional']['warnings'] = None
 
         if type(config['optional'].get('genres')) == list:
             for genre_nr in range(len(config['optional']['genres'])):
@@ -261,6 +264,7 @@ class ecmbBuilderBookConfig():
                     },
                     'publishdate': '0000-00-00|0000',
                     'summary': '',
+                    'pages': 0,
                     'notes': '',
                     'genres': ['Example1', 'Example2'],
                     'warnings': warnings,
