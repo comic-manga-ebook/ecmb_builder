@@ -27,7 +27,7 @@ from invoke import task
 from lib.ecmb_builder_enums import *
 from lib.ecmb_renamer import ecmbRenamer
 from lib.ecmb_builder import ecmbBuilder
-from lib.ecmblib.src.ecmblib import ecmbException
+from ecmblib import ecmbException
 
 
 

@@ -26,7 +26,7 @@
 import re, os, json
 from .ecmb_builder_enums import *
 from .ecmb_builder_config import ecmbBuilderConfig
-from .ecmblib.src.ecmblib import ecmbUtils, ecmbException, BOOK_TYPE, BASED_ON_TYPE, CONTENT_WARNING, AUTHOR_ROLE, EDITOR_ROLE
+from ecmblib import ecmbUtils, ecmbException, BOOK_TYPE, BASED_ON_TYPE, CONTENT_WARNING, AUTHOR_ROLE, EDITOR_ROLE
 
 
 class ecmbBuilderBookConfig():

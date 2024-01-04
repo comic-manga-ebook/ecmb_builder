@@ -27,7 +27,7 @@ import re, os, path, hashlib
 from datetime import datetime
 from.ecmb_builder_enums import *
 from .ecmb_builder_base import ecmbBuilderBase
-from .ecmblib.src.ecmblib import ecmbException, ecmbUtils
+from ecmblib import ecmbException, ecmbUtils
 
 
 class ecmbRenamer(ecmbBuilderBase):

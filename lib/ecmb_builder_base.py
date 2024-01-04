@@ -30,7 +30,7 @@ from .ecmb_builder_utils import ecmbBuilderUtils
 from .ecmb_builder_config import ecmbBuilderConfig
 from .ecmb_builder_book_config import ecmbBuilderBookConfig
 from .resize.ecmb_builder_resize_base import ecmbBuilderResizeBase
-from .ecmblib.src.ecmblib import ecmbBook, ecmbException
+from ecmblib import ecmbBook, ecmbException
 
 
 class ecmbBuilderBase():

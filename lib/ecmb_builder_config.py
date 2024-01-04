@@ -25,7 +25,7 @@
 
 import re, os, yaml, path
 from .ecmb_builder_utils import ecmbBuilderUtils
-from .ecmblib.src.ecmblib import ecmbUtils, ecmbException, BOOK_TYPE
+from ecmblib import ecmbUtils, ecmbException, BOOK_TYPE
 
 
 
