@@ -1,4 +1,5 @@
 invoke
+tqdm
 pyyaml
 pillow
 path
