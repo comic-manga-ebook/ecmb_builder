@@ -12,6 +12,7 @@
 - [Using the file-renamer](#using-the-file-renamer)
   - [Avaliable functions](#available-functions)
   - [Example](#example)
+  - [Split volumes](#split-volumes)
 - [Using the builder](#using-the-builder)
   - [Initialize](#initialize)
   - [Build](#build)
@@ -22,7 +23,7 @@
 ## About this repository:
 This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.
 
-In real life, when you have downloaded a comic or manga the files are really messy - the **file-renamer** will help you cleaning the contents.
+In real life, when you have downloaded a comic or manga the files are really messy - the **file-renamer**  will make it easier for you cleaning the contents.
 
 Published under [MIT License](https://choosealicense.com/licenses/mit/)
 
@@ -113,23 +114,36 @@ source_dir/
 ![Images](docs/images.jpg)
 
 ## Using the file-renamer:
-Of course you want to clean that mess and the file-renamer will make it easier for you
+Of course you want to clean that mess and the file-renamer will make it easier for you.
 
 ### Avaliable functions:
-**Functions:**
-- zeropad
-- prefix
-- reverse
-- rename
-
 **Objects:**
 - volumes
 - chapters
 - images
 - all
 
-**Run it in git-console: **
-`invoke [FUNCTION] [OBJECT] "[YOUR_BOOK_FOLDER]"` eg. `invoke rename images "My_Book_Folder"`
+**Functions:**
+- zeropad
+  - will prefix everything with 0000
+- prefix
+  - will prefix everything with an incremental zero-filled number eg. 0010, 0020, 0030
+- reverse
+  - will prefix everything with an incremental zero-filled number in reverse order
+- rename
+  - will rename everything with an incremental zero-filled number. You will loose the original name
+
+**Run it in git-console:**
+- open the folder "ecmb_builder"
+- open the git-console with right-click (like you have done before)
+- type`invoke [FUNCTION] [OBJECT] "[YOUR_BOOK_FOLDER]"` eg. `invoke rename images "My_Book_Folder"` and press [enter]
+
+### Example:
+If we take the messy example from above i would suggest to first zeropad the chapters:
+
+Now your folders will look like this. Of course you have to sort them manually:
+
+
 
 
 
