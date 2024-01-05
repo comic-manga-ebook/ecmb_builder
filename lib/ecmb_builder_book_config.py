@@ -349,9 +349,12 @@ class ecmbBuilderBookConfig():
         else: 
             book_config['chapters'] = {}
             for chapter in chapter_folders:
-                label = re.sub(r'^(chapter_)?[0-9_ -]+', '', chapter['name'])
-                chapter_cnt += 1
-                chapter_template.update({'label': label if label else f'Chapter {chapter_cnt}'})
+                label = re.sub(r'^(chapter_)?[^a-z]+', '', chapter['name'], re.IGNORECASE)
+                if label:
+                    chapter_template.update({'label': label})
+                else:
+                    chapter_cnt += 1
+                    chapter_template.update({'label': f'Chapter {chapter_cnt}'})
                 book_config['chapters'][chapter['name']] = dict(chapter_template)
 
         with open(self._source_dir + 'book_config.json', 'w') as f:

@@ -65,14 +65,14 @@ class ecmbRenamer(ecmbBuilderBase):
         print('', flush=True)
 
 
-    def split(self, rename_items:RENAME_ITEMS, volumes: int) -> None:
+    def group(self, rename_items:RENAME_ITEMS, volumes: int) -> None:
         rename_items = ecmbUtils.enum_value(rename_items)
 
         if self._book_config.is_initialized:
             raise ecmbException('Book is allready initialized!')
         
         if rename_items != RENAME_ITEMS.VOLUMES.value:
-            raise ecmbException(f'Can only split volumes!')
+            raise ecmbException(f'Can only group volumes!')
         
         (chapter_folders, volume_folders) = self._read_folder_structure()
         if volume_folders:
