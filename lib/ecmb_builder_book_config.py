@@ -349,7 +349,7 @@ class ecmbBuilderBookConfig():
         else: 
             book_config['chapters'] = {}
             for chapter in chapter_folders:
-                label = re.sub(r'^(chapter_)?[^a-z]+', '', chapter['name'], re.IGNORECASE)
+                label = re.sub(r'^(chapter_)?[0-9%_. +~-]+', '', chapter['name'], re.IGNORECASE)
                 if label:
                     chapter_template.update({'label': label})
                 else:
