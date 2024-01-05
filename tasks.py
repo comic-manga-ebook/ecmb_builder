@@ -59,22 +59,22 @@ def renameservice(ctx, rename_type: RENAME_TYPE, rename_items: RENAME_ITEMS, fol
 		print('\x1b[31;20m\n' + msg + '\n\n  FAILED!  \x1b[0m\n', flush=True)
 
 @task()
-def parsechapters(ctx, folder_name: str):
+def parse(ctx, rename_items: RENAME_ITEMS, folder_name: str):
 	print(' ', flush=True)
 	try:
 		renamer = ecmbRenamer(folder_name)
-		renamer.parse()
+		renamer.parse(rename_items)
 		print('\033[1;32;40m  SUCCESS!\x1b[0m\n', flush=True)
 	except ecmbException as e:
 		msg = '\n'.join(['  ' + p for p in str(e).split('\n')])
 		print('\x1b[31;20m\n' + msg + '\n\n  FAILED!  \x1b[0m\n', flush=True)
 
 @task()
-def splitvolumes(ctx, volumes: int, folder_name: str):
+def split(ctx, rename_items: RENAME_ITEMS, volumes: int, folder_name: str):
 	print(' ', flush=True)
 	try:
 		renamer = ecmbRenamer(folder_name)
-		renamer.split(volumes)
+		renamer.split(rename_items, volumes)
 		print('\033[1;32;40m  SUCCESS!\x1b[0m\n', flush=True)
 	except ecmbException as e:
 		msg = '\n'.join(['  ' + p for p in str(e).split('\n')])

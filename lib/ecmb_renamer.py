@@ -50,18 +50,29 @@ class ecmbRenamer(ecmbBuilderBase):
         print('', flush=True)
 
     
-    def parse(self) -> None:
+    def parse(self, rename_items:RENAME_ITEMS) -> None:
+        rename_items = ecmbUtils.enum_value(rename_items)
+
         if self._book_config.is_initialized:
             raise ecmbException('Book is allready initialized!')
+        
+        if rename_items != RENAME_ITEMS.CHAPTERS.value:
+            raise ecmbException(f'Can  only parse chapters!')
+
         if self._rename_chapters(RENAME_ITEMS.CHAPTERS.value, 'parse'):
             self._rename_chapters(RENAME_ITEMS.CHAPTERS.value, RENAME_TYPE.PREFIX.value)
         
         print('', flush=True)
 
 
-    def split(self, volumes: int) -> None:
+    def split(self, rename_items:RENAME_ITEMS, volumes: int) -> None:
+        rename_items = ecmbUtils.enum_value(rename_items)
+
         if self._book_config.is_initialized:
             raise ecmbException('Book is allready initialized!')
+        
+        if rename_items != RENAME_ITEMS.VOLUMES.value:
+            raise ecmbException(f'Can only split volumes!')
         
         (chapter_folders, volume_folders) = self._read_folder_structure()
         if volume_folders:
