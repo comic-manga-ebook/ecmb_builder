@@ -1,10 +1,20 @@
 > [!WARNING]
 > This project is still under developement, so please don't use it atm
 
+
 ### Homepage: [https://comic-manga-ebook.github.io](https://comic-manga-ebook.github.io)
 
+### Table of contents:
+- [About this repository](https://github.com/comic-manga-ebook/ecmb_builder#about-this-repository)
+- [Installation](https://github.com/comic-manga-ebook/ecmb_builder#installation)
+
+
+
+
 ## About this repository:
-This is a simple-to-use builder to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.
+This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.
+
+In real life, when you have downloaded a comic or manga the files are really messy - thefile-renamer will help you cleaning the contents.
 
 Published under [MIT License](https://choosealicense.com/licenses/mit/)
 
@@ -14,25 +24,26 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
 
 **If you like it I would be happy if you  [donate on checkya](https://checkya.com/1hhp2cpit9eha/payme)**
 
-# Using the builder
 
-### Installation
+## Installation
 - download and install Python3 (>=3.11) [https://www.python.org/downloads/](https://www.python.org/downloads/)
+  Here is a little guide how to install python [https://www.digitalocean.com/community/tutorials/install-python-windows-10](https://www.digitalocean.com/community/tutorials/install-python-windows-10)
 - download and install Git [https://git-scm.com/downloads](https://git-scm.com/downloads).
   Here is a little guide how to install and open git console: [https://www.youtube.com/watch?v=lKYtK-DS0MY](https://www.youtube.com/watch?v=lKYtK-DS0MY)
 - create an empty folder on your harddisk (eg. "comic_manga") and open it
+- download or clone the repository and save the contents to a subfolder "ecmb_builder"
 - open the git-console with right-click (like you learned in the video) and then type or copy the commands to the console and press [enter] after each command:
     - `mkdir source_dir`
     - `mkdir output_dir`
-    - `git clone git@github.com:metacreature/ecmb_builder.git`
     - `cd ecmb_builder`
     - `pip install -r requirements.txt`
 - after that there are 3 subfolders in your "comic_manga"-folder
 - open the folder "ecmb_builder" and open the config-file `ecmb_builder_config.yml` with any simple text-editor
   (I would recommend to use [https://notepad-plus-plus.org/downloads/](https://notepad-plus-plus.org/downloads/)) and do your settings there (or just leave it as it is).
 
-### 1) The source-files
+## The source-files (in a perfect world)
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file)
+
 
 File-Structure:
 ```
@@ -68,7 +79,6 @@ source_dir/
         ˪ volume_003
         ˪ volume_004
 ```
-- the file- and folder-names can be messy - if you activated "rename" in the config-file, it will be renamed anyways
 - the file- and folder-names are sorted alphanumerc (like every file-system)
 - files and folders starting with "__" (2 underscores) are ignored in general
 - allowed image-extension: jpg, jpeg, png, webp
