@@ -22,7 +22,7 @@
 ## About this repository:
 This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.
 
-In real life, when you have downloaded a comic or manga the files are really messy - thefile-renamer will help you cleaning the contents.
+In real life, when you have downloaded a comic or manga the files are really messy - the **file-renamer** will help you cleaning the contents.
 
 Published under [MIT License](https://choosealicense.com/licenses/mit/)
 
@@ -55,7 +55,7 @@ Your source-files have to be located in "comic_manga/source_dir" (if you didn't 
 File-Structure:
 ```
 source_dir/
-    ˪ My_Manga_Name
+    ˪ My_Book_Folder
         ˪ chapter_0001
              ˪ img_0000010.jpg
              ˪ img_0000020.jpg
@@ -116,7 +116,22 @@ source_dir/
 Of course you want to clean that mess and the file-renamer will make it easier for you
 
 ### Avaliable functions:
-aaaaaaaaaaaaaa
+**Functions:**
+- zeropad
+- prefix
+- reverse
+- rename
+
+**Objects:**
+- volumes
+- chapters
+- images
+- all
+
+**Run it in git-console: **
+`invoke [FUNCTION] [OBJECT] "[YOUR_BOOK_FOLDER]"` eg. `invoke rename images "My_Book_Folder"`
+
+
 
 
 ### 2) Initialize the book
