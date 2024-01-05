@@ -175,7 +175,7 @@ After that it should look like this, of course after you added "Extra" manually:
 5) Finally, after you have deleted all advertisements and credits from your source-images yo can run `group volumes`:<br />
 ![git_group_volumes](docs/git_group_volumes.jpg)<br /><br />
 Done! (of course you have to check the result)
-![git_group_volumes](docs/git_group_volumes.jpg)
+![group_volumes](docs/group_volumes.jpg)
 
 <br />
 
