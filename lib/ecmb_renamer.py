@@ -49,6 +49,15 @@ class ecmbRenamer(ecmbBuilderBase):
 
         print('', flush=True)
 
+    
+    def parse(self) -> None:
+        if self._book_config.is_initialized:
+            raise ecmbException('Book is allready initialized!')
+        if self._rename_chapters(RENAME_ITEMS.CHAPTERS.value, 'parse'):
+            self._rename_chapters(RENAME_ITEMS.CHAPTERS.value, RENAME_TYPE.PREFIX.value)
+        
+        print('', flush=True)
+
 
     def split(self, volumes: int) -> None:
         if self._book_config.is_initialized:
@@ -112,17 +121,18 @@ class ecmbRenamer(ecmbBuilderBase):
         
         
 
-    def _rename_volumes(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE) -> None:
+    def _rename_volumes(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE) -> int:
         if rename_items in [RENAME_ITEMS.VOLUMES.value, RENAME_ITEMS.ALL.value]:
             (chapter_folders, volume_folders) = self._read_folder_structure()
             volumes = 0
             if volume_folders:
                 volumes = self._rename_path(RENAME_ITEMS.VOLUMES.value, rename_type, volume_folders)
             print(f'  {rename_type} {volumes} volumes', flush=True)
+            return volumes
 
 
-    def _rename_chapters(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE) -> None:
-        if rename_items in [RENAME_ITEMS.CHAPTERS.value, RENAME_ITEMS.ALL.value]: 
+    def _rename_chapters(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE) -> int:
+        if rename_items in [RENAME_ITEMS.CHAPTERS.value, RENAME_ITEMS.ALL.value]:
             (chapter_folders, volume_folders) = self._read_folder_structure()
             if volume_folders:
                 chapter_nr = 0
@@ -131,9 +141,10 @@ class ecmbRenamer(ecmbBuilderBase):
             else: 
                 chapter_nr = self._rename_path(RENAME_ITEMS.CHAPTERS.value, rename_type, chapter_folders)
             print(f'  {rename_type} {chapter_nr} chapters', flush=True)
+            return chapter_nr
 
 
-    def _rename_images(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE) -> None:
+    def _rename_images(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE) -> int:
         if rename_items in [RENAME_ITEMS.IMAGES.value, RENAME_ITEMS.ALL.value]:
             (chapter_folders, volume_folders) = self._read_folder_structure()
             image_nr = 0
@@ -142,6 +153,7 @@ class ecmbRenamer(ecmbBuilderBase):
                 image_nr = self._rename_path(RENAME_ITEMS.IMAGES.value, rename_type, image_list, image_nr)
                 
             print(f'  {rename_type} {image_nr} images', flush=True)
+            return image_nr
 
 
     def _rename_path(self, rename_items: RENAME_ITEMS, rename_type :RENAME_TYPE, path_list: list, start_at: int = 0) -> int:
@@ -154,17 +166,14 @@ class ecmbRenamer(ecmbBuilderBase):
         if rename_items == RENAME_ITEMS.VOLUMES.value:
             prefix = 'volume_'
             zfill = 3
-            suffix = '0'
         if rename_items == RENAME_ITEMS.CHAPTERS.value:
             prefix = 'chapter_'
             zfill = 4
-            suffix = '0'
         if rename_items == RENAME_ITEMS.IMAGES.value:
             prefix = 'img_'
             zfill = 6
-            suffix = '0'
 
-        if rename_type in [RENAME_TYPE.PREFIX.value, RENAME_TYPE.ZEROPAD.value]:
+        if rename_type in [RENAME_TYPE.PREFIX.value, RENAME_TYPE.ZEROPAD.value, 'parse']:
             if rename_items == RENAME_ITEMS.VOLUMES.value:
                 regex = r'^volume_[0-9]+(_)?'
             if rename_items == RENAME_ITEMS.CHAPTERS.value:
@@ -175,7 +184,7 @@ class ecmbRenamer(ecmbBuilderBase):
         if rename_type == RENAME_TYPE.RENAME.value:
             regex = r'.*'
         
-        if rename_type == RENAME_TYPE.ZEROPAD.value:
+        if rename_type == RENAME_TYPE.ZEROPAD.value or rename_type == 'parse':
             for item in path_list:
                 if re.search(regex, item['name']):
                     return start_at
@@ -195,11 +204,22 @@ class ecmbRenamer(ecmbBuilderBase):
                 new_name = re.sub(regex, '', item['name'])
                 if item.get('extension'):
                     new_name = re.sub('[.]' + item.get('extension') + '$', '', new_name)
+                
+                if rename_type == 'parse':
+                    match = re.search(r'c[^0-9]*([0-9]+)([^0-9a-z]+([0-9]+))?[^0-9]*$', new_name, re.IGNORECASE)
+                    if match:
+                        new_name_tmp = prefix + (str(match.group(1)).zfill(zfill))
+                        if match.group(3):
+                            new_name = new_name_tmp + str(match.group(3)).zfill(3) + ('_'+ new_name if new_name else '')
+                        else:
+                            new_name = new_name_tmp + '000' + ('_'+ new_name if new_name else '')
+                    else:
+                        new_name = prefix + (str(0).zfill(zfill)) + '000' + ('_'+ new_name if new_name else '')
 
-                if rename_type == RENAME_TYPE.ZEROPAD.value:
-                    new_name = prefix + (str(0).zfill(zfill)) + suffix + ('_'+ new_name if new_name else '')
+                elif rename_type == RENAME_TYPE.ZEROPAD.value:
+                    new_name = prefix + (str(0).zfill(zfill)) + '0' + ('_'+ new_name if new_name else '')
                 else:
-                    new_name = prefix + (str(cnt).zfill(zfill)) + suffix + ('_'+ new_name if new_name else '')
+                    new_name = prefix + (str(cnt).zfill(zfill)) + '0' + ('_'+ new_name if new_name else '')
 
                 new_name += '.' + item.get('extension') if item.get('extension') else ''
                 os.rename(item['path'] + item['tmp_name'], item['path'] + new_name)
