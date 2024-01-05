@@ -97,11 +97,13 @@ class ecmbRenamer(ecmbBuilderBase):
             total_images += chapter['images']
             
         avg_pages = round(total_images / volumes)
+
+        tmp_name = 'ecmbbuilder_tmpname_' + hashlib.md5(str(datetime.now()).encode()).hexdigest()
 		
         volume_nr = 0 
         while volume_nr < volumes:
             volume_nr += 1
-            volume_dir = self._source_dir + 'ecmbbuilder_tmpname_' + hashlib.md5(str(datetime.now()).encode()).hexdigest() + ('_{}'.format(str(volume_nr).zfill(3)))
+            volume_dir = self._source_dir + tmp_name + ('_{}'.format(str(volume_nr).zfill(3)))
             os.mkdir(volume_dir)
 
             found = False
