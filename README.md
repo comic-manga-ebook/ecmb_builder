@@ -5,8 +5,16 @@
 ### Homepage: [https://comic-manga-ebook.github.io](https://comic-manga-ebook.github.io)
 
 ### Table of contents:
-- [About this repository](https://github.com/comic-manga-ebook/ecmb_builder#about-this-repository)
-- [Installation](https://github.com/comic-manga-ebook/ecmb_builder#installation)
+- [About this repository](#about-this-repository)
+- [Installation](#installation)
+- [The source-files (in a perfect world)](#the-source-files-in-a-perfect-world)
+- [The source-files (in real life)](#the-source-files-in-real-life)
+- [Using the file-renamer](#using-the-file-renamer)
+  - [Avaliable functions](#available-functions)
+  - [Example](#example)
+- [Using the builder](#using-the-builder)
+  - [Initialize](#initialize)
+  - [Build](#build)
 
 
 
@@ -43,7 +51,6 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
 
 ## The source-files (in a perfect world)
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file)
-
 
 File-Structure:
 ```
@@ -100,6 +107,17 @@ source_dir/
 | f.webp           | r.webp          |
 
 **Note!** If you have many books in your source-folder you can organize them in subfolders
+
+## The source-files (in real life)
+![Chapters](docs/chapters.jpg)
+![Images](docs/images.jpg)
+
+## Using the file-renamer:
+Of course you want to clean that mess and the file-renamer will make it easier for you
+
+### Avaliable functions:
+aaaaaaaaaaaaaa
+
 
 ### 2) Initialize the book
 - open the folder "ecmb_builder"
