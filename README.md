@@ -188,7 +188,7 @@ Done! (of course you have to check the result)<br /><br/>
 
 ### Initialize the book
 
-**There are 3 types to initialize**
+**There are 3 types to initialize:**
 - `basic`
 - `translated`
 - `full`
