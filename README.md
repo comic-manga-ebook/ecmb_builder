@@ -125,7 +125,7 @@ source_dir/
 ## Using the file-cleaner
 Of course you want to clean that mess and the file-cleaner will make it easier for you.
 
-### Available functions:
+### Available functions
 **Objects:**
 - `volumes`
 - `chapters`
