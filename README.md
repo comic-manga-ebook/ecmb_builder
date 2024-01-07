@@ -13,7 +13,7 @@
   - [Available functions](#available-functions)
   - [Cleaning source-files example](#cleaning-source-files-example)
 - [Using the builder](#using-the-builder)
-  - [Initialize](#initialize)
+  - [Initialize the book](#initialize-the-book)
   - [Prepare for build](#prepare-for-build)
   - [Build the book(s)](#build-the-book-s)
 
@@ -40,12 +40,15 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
   Here is a little guide how to install and open git console: [https://www.youtube.com/watch?v=lKYtK-DS0MY](https://www.youtube.com/watch?v=lKYtK-DS0MY)
 - create an empty folder on your harddisk (eg. "comic_manga") and open it
 - download or clone the repository and save the contents to a subfolder "ecmb_builder"
-- open the git-console with right-click (like you learned in the video) and then type or copy the commands to the console and press [enter] after each command:
+- open the git-console with right-click (like you learned in the video) and then type or copy the commands to the console and press `[ENTER]` after each command:
     - `mkdir source_dir`
     - `mkdir output_dir`
     - `cd ecmb_builder`
-    - `pip install -r requirements.txt`
-- after that there are 3 subfolders in your "comic_manga"-folder: <br/> ![installation](docs/installation.jpg)
+    - `pip install -r requirements.txt`<br /><br />
+    ![git_install](docs/git_install.jpg) <br /><br />
+      
+- after that there are 3 subfolders in your "comic_manga"-folder: <br/><br/>
+![installation](docs/installation.jpg)
 - open the folder "ecmb_builder" and open the config-file `ecmb_builder_config.yml` with any simple text-editor<br/>
   (I would recommend to use [https://notepad-plus-plus.org/downloads/](https://notepad-plus-plus.org/downloads/)) and do your settings there (or just leave it as it is).
 
@@ -127,7 +130,7 @@ Of course you want to clean that mess and the file-cleaner will make it easier f
 - `volumes`
 - `chapters`
 - `images`
-- `all`
+- `all`<br/><br/>
 
 **Functions:**
 
@@ -139,12 +142,12 @@ Functions will sort the names alphanumerical and will preserve their order.
 - `reverse`<br/>
   will prefix everything with an incremental zero-filled number in reverse order
 - `rename`<br/>
-  will rename everything with an incremental zero-filled number. You will loose the original name
+  will rename everything with an incremental zero-filled number. You will loose the original name<br/><br/>
 
 **Run it in git-console:**
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke [FUNCTION] [OBJECT] "[YOUR_BOOK_FOLDER]"` eg. `invoke rename images "My_Book_Folder"` and press [enter]
+- type `invoke [FUNCTION] [OBJECT] "[MY_BOOK_FOLDER]"` eg. `invoke rename images "My_Book_Folder"` and press `[ENTER]`<br/><br/>
 
 
 **Special Functions**
@@ -159,33 +162,32 @@ Special functions will try to help you, but you have to check the results manual
 
 ### Cleaning source-files example:
 
-1) If we take the messy example from above i would suggest to `parse chapters` first:<br />
+- If we take the messy example from above i would suggest to `parse chapters` first:<br /><br/>
 ![git_parse_chapters](docs/git_parse_chapters.jpg) <br /><br />
-Now your folders will look like this. Of course you have to check it and solve issues manually:<br />
+Now your folders will look like this. Of course you have to check it and solve issues manually:<br /><br/>
 ![parse_chapters](docs/parse_chapters.jpg)<br /><br />
-2) After solving the issues you can run `rename images`:<br />
+- After solving the issues you can run `rename images`:<br /><br/>
 ![git_rename_images](docs/git_rename_images.jpg)<br /><br />
-Now your images have unique incremental names and you can merge chapters and clean images easily:<br />
+Now your images have unique incremental names and you can merge chapters and clean images easily:<br /><br/>
 ![rename_images](docs/rename_images.jpg)<br /><br />
-3) After you have merged the chapters manually your folder should look like this:<br />
+- After you have merged the chapters manually your folder should look like this:<br /><br/>
 ![merge_chapters](docs/merge_chapters.jpg)<br /><br />
-4) I guess you don't like the names, so you should rename your chapters now:<br />
+- I guess you don't like the names, so you should rename your chapters now:<br /><br/>
 ![rename_chapters2](docs/rename_chapters2.jpg)<br /><br />
-but I guess you are too lazy to rename them manually. So run `rename chapters`<br />
+but I guess you are too lazy to rename them manually. So run `rename chapters`:<br /><br/>
 ![git_rename_chapters](docs/git_rename_chapters.jpg)<br /><br />
-After that it should look like this, of course after you added "Extra" manually:<br />
+After that it should look like this, of course after you added "Extra" manually:<br /><br/>
 ![rename_chapters](docs/rename_chapters.jpg)<br /><br />
-6) After you have deleted all advertisements and credits from your source-images you can run `group volumes`:<br />
+- After you have deleted all advertisements and credits from your source-images you can run `group volumes`:<br /><br/>
 ![git_group_volumes](docs/git_group_volumes.jpg)<br /><br />
-Done! (of course you have to check the result)<br />
+Done! (of course you have to check the result)<br /><br/>
 ![group_volumes](docs/group_volumes.jpg)<br /><br />
-7) As a final step it would be a good idea to add at least the front-covers now!
+- As a final step it would be a good idea to add at least the front-covers now!<br/><br/>
 
-<br />
+## Using the builder
 
-## Using the builder:
+### Initialize the book
 
-### Initialize
 **There are 3 types to initialize**
 - `basic`
 - `translated`
@@ -195,28 +197,32 @@ When you initialize a book a file named `book_config.json` will be generated in 
 You could add values or write this file enterly manually if you want, but its a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
 Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Extra" in between the number won't be increased of course.
 
-**Note!** If your downloader allready created that file you can skip this step
+**Note!** If your downloader allready created that file you can skip this step<br /><br/>
 
 **Run it in git-console:**
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke init basic "My_Book_Folder"`<br />
+- type `invoke init [TYPE] "[MY_BOOK_FOLDER]"` and press `[ENTER]`<br /><br/>
   ![git_init](docs/git_init.jpg)<br /><br />
-  Now the file `book_config.json` is in your book-folder<br />
+  Now the file `book_config.json` is in your book-folder<br /><br/>
   ![init](docs/init.jpg)<br /><br />
 
-### Preparing for build
+### Prepare for build
+
 - You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.<br />
 Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
 - what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters?<br />
-If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`
+If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`<br/><br/>
 
 
 ### Build the book(s)
+
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke build "My_Book_Folder"` to build all volumes
-- type `invoke build "My_Book_Folder" --volumes "1,2,5"` if you only want to build specific volumes
+- type `invoke build "My_Book_Folder"` and press `[ENTER]` to build all volumes<br />
+  type `invoke build "My_Book_Folder" --volumes "1,2,5"` and press `[ENTER]` if you only want to build specific volumes<br /><br/>
+  ![git_build](docs/git_build.jpg)<br /><br />
+- Done - your files are in the output-dir! __* yippee *__<br /><br/>
+  ![build](docs/build.jpg)
 
-
-__Done ... your *.ecmb-files ar now in your output-dir!__
+<br/>
