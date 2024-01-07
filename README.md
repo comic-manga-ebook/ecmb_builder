@@ -15,7 +15,7 @@
 - [Using the builder](#using-the-builder)
   - [Initialize the book](#initialize-the-book)
   - [Prepare for build](#prepare-for-build)
-  - [Build the book(s)](#build-the-book-s)
+  - [Build the book(s)](#build-the-books)
 
 
 
