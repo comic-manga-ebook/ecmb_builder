@@ -150,7 +150,7 @@ Functions will sort the names alphanumerical and will preserve their order.
 - type `invoke [FUNCTION] [OBJECT] "[MY_BOOK_FOLDER]"` eg. `invoke rename images "My_Book_Folder"` and press `[ENTER]`<br/><br/>
 
 
-**Special Functions**
+**Special Functions:**
 
 Special functions will try to help you, but you have to check the results manually.
 - `parse chapters`<br/>
