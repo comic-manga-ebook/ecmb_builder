@@ -74,7 +74,7 @@ class ecmbBuilder(ecmbBuilderBase):
         config = self._book_config
 
         file_name = re.sub(r'[^a-zA-Z0-9]+', ' ', config.book_title).strip()
-        file_name += f' Vol. {volume_nr}' if volume_nr != None else ''
+        file_name += f' Vol.{volume_nr}' if volume_nr != None else ''
         file_name += '.ecmb'
 
         print('  ' + file_name, flush=True)

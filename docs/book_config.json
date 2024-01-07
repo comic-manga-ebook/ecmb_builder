@@ -1,0 +1,476 @@
+{
+    "builder-config": {
+        "resize_method": "max",
+        "resize_width": 900,
+        "resize_height": 1200,
+        "webp_compression": 75,
+        "compress_all": true
+    },
+    "required": {
+        "type": "manga",
+        "language": "en",
+        "title": "Looking up to Magical Girls"
+    },
+    "optional": {
+        "isbn": "",
+        "publisher": {
+            "name": "",
+            "href": ""
+        },
+        "publishdate": "0000-00-00|0000",
+        "summary": "",
+        "pages": 0,
+        "notes": "",
+        "genres": [
+            "Example1",
+            "Example2"
+        ],
+        "warnings": [
+            "Mature Themes",
+            "Nudity",
+            "Sexual Content",
+            "Explict Sex",
+            "Hentai",
+            "Prostitution",
+            "Incest",
+            "Violence",
+            "Explicit Violence",
+            "Terrorism",
+            "Emotional Abuse",
+            "Sexual Abuse",
+            "Physical Abuse",
+            "Domestic Abuse",
+            "Self-Harm",
+            "Suicide",
+            "Drugs"
+        ],
+        "authors": [
+            {
+                "name": "",
+                "role": "Author",
+                "href": ""
+            },
+            {
+                "name": "",
+                "role": "Co-Author",
+                "href": ""
+            },
+            {
+                "name": "",
+                "role": "Story",
+                "href": ""
+            },
+            {
+                "name": "",
+                "role": "Art",
+                "href": ""
+            },
+            {
+                "name": "",
+                "role": "Colorist",
+                "href": ""
+            },
+            {
+                "name": "",
+                "role": "CoverArtist",
+                "href": ""
+            }
+        ],
+        "editors": [
+            {
+                "name": "",
+                "role": "Translator",
+                "href": ""
+            },
+            {
+                "name": "",
+                "role": "Scanner",
+                "href": ""
+            }
+        ],
+        "original": {
+            "language": "",
+            "isbn": "",
+            "publisher": {
+                "name": "",
+                "href": ""
+            },
+            "publishdate": "0000-00-00|0000",
+            "title": "",
+            "authors": [
+                {
+                    "name": "",
+                    "role": "Author",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Co-Author",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Story",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Art",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Colorist",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "CoverArtist",
+                    "href": ""
+                }
+            ]
+        },
+        "based_on": {
+            "type": "Novel|Lightnovel|Manga|Comic|Anime|Game|Other",
+            "language": "",
+            "isbn": "",
+            "publisher": {
+                "name": "",
+                "href": ""
+            },
+            "publishdate": "0000-00-00|0000",
+            "title": "",
+            "authors": [
+                {
+                    "name": "",
+                    "role": "Author",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Co-Author",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Story",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Art",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "Colorist",
+                    "href": ""
+                },
+                {
+                    "name": "",
+                    "role": "CoverArtist",
+                    "href": ""
+                }
+            ]
+        }
+    },
+    "volumes": {
+        "volume_0010": {
+            "chapter_00010": {
+                "label": "Chapter 1",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00020": {
+                "label": "Chapter 2",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00030": {
+                "label": "Chapter 3",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00040": {
+                "label": "Chapter 4",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00050": {
+                "label": "Chapter 5",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00060": {
+                "label": "Chapter 6",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00070": {
+                "label": "Chapter 7",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00080": {
+                "label": "Chapter 8",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00090": {
+                "label": "Chapter 9",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00100": {
+                "label": "Chapter 10",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            }
+        },
+        "volume_0020": {
+            "chapter_00110": {
+                "label": "Chapter 11",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00120": {
+                "label": "Chapter 12",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00130": {
+                "label": "Chapter 13",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00140": {
+                "label": "Chapter 14",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00150": {
+                "label": "Chapter 15",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00160": {
+                "label": "Chapter 16",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00170": {
+                "label": "Chapter 17",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00180": {
+                "label": "Chapter 18",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00190": {
+                "label": "Chapter 19",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            }
+        },
+        "volume_0030": {
+            "chapter_00200": {
+                "label": "Chapter 20",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00210": {
+                "label": "Chapter 21",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00220": {
+                "label": "Chapter 22",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00230": {
+                "label": "Chapter 23",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00240": {
+                "label": "Chapter 24",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00250": {
+                "label": "Chapter 25",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00260": {
+                "label": "Chapter 26",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00270": {
+                "label": "Chapter 27",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00280": {
+                "label": "Chapter 28",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            }
+        },
+        "volume_0040": {
+            "chapter_00290": {
+                "label": "Chapter 29",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00300": {
+                "label": "Chapter 30",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00310": {
+                "label": "Chapter 31",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00320": {
+                "label": "Chapter 32",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00330": {
+                "label": "Chapter 33",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00340": {
+                "label": "Chapter 34",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00350": {
+                "label": "Chapter 35",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00360": {
+                "label": "Chapter 36",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00370": {
+                "label": "Chapter 37",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            }
+        },
+        "volume_0050": {
+            "chapter_00380": {
+                "label": "Chapter 38",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00390": {
+                "label": "Chapter 39",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00400": {
+                "label": "Chapter 40",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00410": {
+                "label": "Chapter 41",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00420": {
+                "label": "Chapter 42",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00430": {
+                "label": "Chapter 43",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00440": {
+                "label": "Chapter 44",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00450": {
+                "label": "Chapter 45",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00460": {
+                "label": "Chapter 46",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            }
+        },
+        "volume_0060": {
+            "chapter_00470": {
+                "label": "Chapter 47",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00480": {
+                "label": "Chapter 48",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00490": {
+                "label": "Chapter 49",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00500": {
+                "label": "Chapter 50",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00510": {
+                "label": "Chapter 51",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00520": {
+                "label": "Chapter 52",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00530": {
+                "label": "Chapter 53",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00540": {
+                "label": "Chapter 54",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00550": {
+                "label": "Chapter 55",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00560": {
+                "label": "Chapter 56",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            },
+            "chapter_00570_Extra": {
+                "label": "Extra",
+                "title": "",
+                "start_with": "my_image_name.jpg#left"
+            }
+        }
+    }
+}
