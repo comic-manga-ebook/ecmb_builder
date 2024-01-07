@@ -9,19 +9,20 @@
 - [Installation](#installation)
 - [The source-files (in a perfect world)](#the-source-files-in-a-perfect-world)
 - [The source-files (in real life)](#the-source-files-in-real-life)
-- [Using the File-Cleaner](#using-the-file-cleaner)
+- [Using the file-cleaner](#using-the-file-cleaner)
   - [Available functions](#available-functions)
   - [Cleaning source-files example](#cleaning-source-files-example)
-- [Using the Builder](#using-the-builder)
+- [Using the builder](#using-the-builder)
   - [Initialize](#initialize)
-  - [Build](#build)
+  - [Prepare for build](#prepare-for-build)
+  - [Build the book(s)](#build-the-book-s)
 
 
 
 
 ## About this repository:
-This is a **simple-to-use Builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.<br/>
-In real life, when you have downloaded a comic or manga the files are really messy - the **File-Cleaner**  will make it easier for you cleaning the contents.
+This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.<br/>
+In real life, when you have downloaded a comic or manga the files are really messy - the **file-cleaner**  will make it easier for you cleaning the contents.
 
 Published under [MIT License](https://choosealicense.com/licenses/mit/)
 
@@ -118,8 +119,8 @@ source_dir/
 
 <br />
 
-## Using the File-Cleaner:
-Of course you want to clean that mess and the File-Cleaner will make it easier for you.
+## Using the file-cleaner:
+Of course you want to clean that mess and the file-cleaner will make it easier for you.
 
 ### Available functions:
 **Objects:**
@@ -156,7 +157,7 @@ Special functions will try to help you, but you have to check the results manual
 
 <br />
 
-## Cleaning source-files example:
+### Cleaning source-files example:
 
 1) If we take the messy example from above i would suggest to `parse chapters` first:<br />
 ![git_parse_chapters](docs/git_parse_chapters.jpg) <br /><br />
@@ -174,30 +175,43 @@ but I guess you are too lazy to rename them manually. So run `rename chapters`<b
 ![git_rename_chapters](docs/git_rename_chapters.jpg)<br /><br />
 After that it should look like this, of course after you added "Extra" manually:<br />
 ![rename_chapters](docs/rename_chapters.jpg)<br /><br />
-6) Finally, after you have deleted all advertisements and credits from your source-images you can run `group volumes`:<br />
+6) After you have deleted all advertisements and credits from your source-images you can run `group volumes`:<br />
 ![git_group_volumes](docs/git_group_volumes.jpg)<br /><br />
 Done! (of course you have to check the result)<br />
-![group_volumes](docs/group_volumes.jpg)
+![group_volumes](docs/group_volumes.jpg)<br /><br />
+7) As a final step it would be a good idea to add at least the front-covers now!
 
 <br />
 
-# Using the Builder:
+## Using the builder:
 
-### 2) Initialize the book
+### Initialize
+**There are 3 types to initialize**
+- `basic`
+- `translated`
+- `full`
+
+When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. The diffrence between those types is simply the number of values can set.<br />
+You could add values or write this file enterly manually if you want, but its a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
+Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Extra" in between the number won't be increased of course.
+
+**Note!** If your downloader allready created that file you can skip this step
+
+**Run it in git-console:**
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke init "My_Manga_Name"`
+- type `invoke init basic "My_Manga_Name"`<br />
+  ![git_init](docs/git_init.jpg)<br /><br />
+  Now the file `book_config.json` is in your book-folder<br />
+  ![init](docs/init.jpg)
 
-**Note!** If you delete the created "book_config.json" you have to run init again, or if your web-scraper allready created that file you can skip this step
-
-### 3) Preparing for build
-- now you can find a "book_config.json" - file in "source_dir/My_Manga_Name/". You should open it with a simple text-editor and add the meta-data like description, genres.
+### Preparing for build
+- You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.
 Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
-- what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters? If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image.
-- if you have downloaded the images from the web it would be a good idea to delete translation-credits and adds from your source-folder, delete/add spacer-images and maybe even swap or edit images.
-- if you haven't got cover-images it would be good to add at least the front-cover.
+- what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters? If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`
 
-### 4) Build the book(s)
+
+### Build the book(s)
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
 - type `invoke build "My_Manga_Name"` to build all volumes
