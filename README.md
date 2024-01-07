@@ -72,7 +72,7 @@ source_dir/
 or 
 ```
 source_dir/
-    ˪ My_Manga_Name
+    ˪ My_Book_Folder
         ˪ volume_001
             ˪ chapter_0001
                ˪ img_0000010.jpg
@@ -200,22 +200,23 @@ Init will parse the folder-names of your chapters. If there is a name after the 
 **Run it in git-console:**
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke init basic "My_Manga_Name"`<br />
+- type `invoke init basic "My_Book_Folder"`<br />
   ![git_init](docs/git_init.jpg)<br /><br />
   Now the file `book_config.json` is in your book-folder<br />
-  ![init](docs/init.jpg)
+  ![init](docs/init.jpg)<br /><br />
 
 ### Preparing for build
-- You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.
+- You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.<br />
 Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
-- what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters? If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`
+- what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters?<br />
+If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`
 
 
 ### Build the book(s)
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke build "My_Manga_Name"` to build all volumes
-- type `invoke build "My_Manga_Name" --volumes 1,2,5` if you only want to build specific volumes
+- type `invoke build "My_Book_Folder"` to build all volumes
+- type `invoke build "My_Book_Folder" --volumes "1,2,5"` if you only want to build specific volumes
 
 
 __Done ... your *.ecmb-files ar now in your output-dir!__
