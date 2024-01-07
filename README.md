@@ -168,13 +168,15 @@ Now your images have unique incremental names and you can merge chapters and cle
 ![rename_images](docs/rename_images.jpg)<br /><br />
 3) After you have merged the chapters manually your folder should look like this:<br />
 ![merge_chapters](docs/merge_chapters.jpg)<br /><br />
-4) I guess you don't like the names and are too lazy to rename them manually. So run `rename chapters`<br />
+4) I guess you don't like the names, so you should rename your chapters now:<br />
+![rename_chapters2](docs/rename_chapters2.jpg)<br /><br />
+but I guess you are too lazy to rename them manually. So run `rename chapters`<br />
 ![git_rename_chapters](docs/git_rename_chapters.jpg)<br /><br />
 After that it should look like this, of course after you added "Extra" manually:<br />
 ![rename_chapters](docs/rename_chapters.jpg)<br /><br />
-5) Finally, after you have deleted all advertisements and credits from your source-images yo can run `group volumes`:<br />
+6) Finally, after you have deleted all advertisements and credits from your source-images you can run `group volumes`:<br />
 ![git_group_volumes](docs/git_group_volumes.jpg)<br /><br />
-Done! (of course you have to check the result)
+Done! (of course you have to check the result)<br />
 ![group_volumes](docs/group_volumes.jpg)
 
 <br />
