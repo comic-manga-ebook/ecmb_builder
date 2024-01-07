@@ -4,7 +4,7 @@
 
 ### Homepage: [https://comic-manga-ebook.github.io](https://comic-manga-ebook.github.io)
 
-### Table of contents:
+### Table of contents
 - [About this repository](#about-this-repository)
 - [Installation](#installation)
 - [The source-files (in a perfect world)](#the-source-files-in-a-perfect-world)
@@ -20,7 +20,7 @@
 
 
 
-## About this repository:
+## About this repository
 This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.<br/>
 In real life, when you have downloaded a comic or manga the files are really messy - the **file-cleaner**  will make it easier for you cleaning the contents.
 
@@ -122,7 +122,7 @@ source_dir/
 
 <br />
 
-## Using the file-cleaner:
+## Using the file-cleaner
 Of course you want to clean that mess and the file-cleaner will make it easier for you.
 
 ### Available functions:
@@ -160,7 +160,7 @@ Special functions will try to help you, but you have to check the results manual
 
 <br />
 
-### Cleaning source-files example:
+### Cleaning source-files example
 
 - If we take the messy example from above i would suggest to `parse chapters` first:<br /><br/>
 ![git_parse_chapters](docs/git_parse_chapters.jpg) <br /><br />
