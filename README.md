@@ -21,8 +21,11 @@
 
 
 ## About this repository
-This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming. Its only capable of creating simple books with no sub-folders or advanced navigation.<br/>
+This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming.<br/>
 In real life, when you have downloaded a comic or manga the files are really messy - the **file-cleaner**  will make it easier for you cleaning the contents.
+
+**Limitations:** <br />
+This builder only capable of creating simple books with no sub-folders or advanced navigation - it does not support the full capabilities of the file-format.
 
 Published under [MIT License](https://choosealicense.com/licenses/mit/)
 
@@ -123,7 +126,7 @@ source_dir/
 <br />
 
 ## Using the file-cleaner
-Of course you want to clean that mess and the file-cleaner will make it easier for you.
+Of course you want to clean that mess and the file-cleaner will make it easier for you. Files and folders starting with "__" (2 underscores) are ignored in general.
 
 ### Available functions
 **Objects:**
