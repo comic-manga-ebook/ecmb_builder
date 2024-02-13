@@ -111,7 +111,7 @@ class ecmbBuilderBookConfig():
             return
 
         try:
-            with open(self._source_dir + 'book_config.json', 'r') as f:		
+            with open(self._source_dir + 'book_config.json', 'r', encoding="UTF-8") as f:		
                 config = json.load(f)
         except Exception as e:
             ecmbUtils.raise_exception('Load "book_config.json" failed: ' + str(e))
