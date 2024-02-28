@@ -56,7 +56,7 @@ class ecmbBuilder(ecmbBuilderBase):
         resize_method = self._load_resize_method()
         
         if self._book_config.chapter_list:
-            self._build_book(resize_method, '', self._book_config.chapter_list)
+            self._build_book(resize_method, '', self._book_config.chapter_list, self._book_config.meta_data.get('volume') if self._book_config.meta_data.get('volume') else None )
         else:
             if volumes != None:
                 volumes = volumes if type(volumes) == list else volumes.split(',')
@@ -79,7 +79,7 @@ class ecmbBuilder(ecmbBuilderBase):
 
         print('  ' + file_name, flush=True)
 
-        book_uid = self._generate_book_uid()
+        book_uid = self._generate_book_uid(volume_nr if volume_nr else 0)
         book = ecmbBook(config.book_type, config.book_language, book_uid, config.resize_width, config.resize_height)
 
         self._add_meta_data(book, volume_nr)
@@ -196,10 +196,10 @@ class ecmbBuilder(ecmbBuilderBase):
                     book.based_on.add_author(author.get('name'), author.get('role'), href = author.get('href'))
 
 
-    def _generate_book_uid(self) -> str:
+    def _generate_book_uid(self, volume_nr:int) -> str:
         config = self._book_config
 
-        hash = config.book_title + str(datetime.now())
+        hash = config.book_title + str(volume_nr) + str(datetime.now())
 
         if type(config.meta_data.get('publisher')) == dict and config.meta_data['publisher'].get('name'):
             prefix = str(config.meta_data['publisher'].get('name'))

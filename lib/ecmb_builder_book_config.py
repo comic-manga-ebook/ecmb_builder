@@ -117,7 +117,7 @@ class ecmbBuilderBookConfig():
             ecmbUtils.raise_exception('Load "book_config.json" failed: ' + str(e))
 
         if type(config) != dict or type(config.get('builder-config')) != dict or type(config.get('required')) != dict or not (
-                type(config.get('volumes')) == dict or type(config.get('chapters')) == dict
+                type(config.get('volumes')) == list or type(config.get('chapters')) == list
             ):
                 ecmbUtils.raise_exception('Invalid "book_config.json"!')
 
@@ -130,36 +130,39 @@ class ecmbBuilderBookConfig():
             ecmbUtils.validate_regex(True, 'required -> language', config['required'].get('language'), r'^[a-z]{2}$')
             ecmbUtils.validate_not_empty_str(True, 'required -> title', config['required'].get('title'))
 
-            if type(config.get('volumes')) == dict:
+            if type(config.get('volumes')) == list:
                 self._volume_list = {}
-                for volume_key, chapter_list in config.get('volumes').items():
-                    volume_dir = self._source_dir + volume_key + '\\'
+                for volume in config.get('volumes'):
+                    ecmbUtils.validate_not_empty_str(True, f'volumes -> dir is missing!', volume.get('dir'))
+                    volume_dir = self._source_dir + volume['dir'] + '\\'
                     if not os.path.exists(volume_dir):
-                        ecmbUtils.raise_exception(f'directory for volume "{volume_key}" is missing!')
-                    volume = []
-
-                    for chapter_key, chapter in chapter_list.items():
-                        chapter_dir = volume_dir + chapter_key +'\\'
+                        ecmbUtils.raise_exception(f'directory for volume "{volume['dir']}" is missing!')
+                    
+                    chapter_list = []
+                    for chapter in volume['chapters']:
+                        ecmbUtils.validate_not_empty_str(True, f'chapters -> dir is missing!', chapter.get('dir'))
+                        chapter_dir = volume_dir + chapter['dir'] +'\\'
                         if not os.path.exists(chapter_dir):
-                            ecmbUtils.raise_exception(f'directory for chapter "{chapter_key}" in volume "{volume_key}" is missing!')
-                        ecmbUtils.validate_not_empty_str(True, f'volumes -> {volume_key} -> {chapter_key} -> label', chapter.get('label'))
+                            ecmbUtils.raise_exception(f'directory for chapter "{chapter['dir']}" in volume "{volume['dir']}" is missing!')
+                        ecmbUtils.validate_not_empty_str(True, f'volumes -> {volume['dir']} -> {chapter['dir']} -> label', chapter.get('label'))
                         chapter['path'] = chapter_dir
                         # remove default_values
                         chapter['start_with'] = None if chapter.get('start_with') == 'my_image_name.jpg#left' else chapter.get('start_with')
-                        volume.append(chapter)
+                        chapter_list.append(chapter)
 
-                    self._volume_list[volume_key] = volume
+                    self._volume_list[volume['dir']] = chapter_list
                 
                 if len(self._volume_list) == 0:
                     ecmbUtils.raise_exception(f'no volumes available!')
 
-            elif type(config.get('chapters')) == dict:
+            elif type(config.get('chapters')) == list:
                 self._chapter_list = []
-                for chapter_key, chapter in config.get('chapters').items():
-                        chapter_dir = self._source_dir + chapter_key +'\\'
+                for chapter in config.get('chapters'):
+                        ecmbUtils.validate_not_empty_str(True, f'chapters -> dir is missing!', chapter.get('dir'))
+                        chapter_dir = self._source_dir + chapter['dir'] +'\\'
                         if not os.path.exists(chapter_dir):
-                            ecmbUtils.raise_exception(f'directory for chapter "{chapter_key}" is missing!')
-                        ecmbUtils.validate_not_empty_str(True, f'chapters -> {chapter_key} -> label', chapter.get('label'))
+                            ecmbUtils.raise_exception(f'directory for chapter "{chapter['dir']}" is missing!')
+                        ecmbUtils.validate_not_empty_str(True, f'chapters -> {chapter['dir']} -> label', chapter.get('label'))
                         chapter['path'] = chapter_dir
                         # remove default_values
                         chapter['start_with'] = None if chapter.get('start_with') == 'my_image_name.jpg#left' else chapter.get('start_with')
@@ -257,6 +260,7 @@ class ecmbBuilderBookConfig():
         match init_type:
             case INIT_TYPE.FULL.value:
                 book_config['optional'] = {
+                    'volume': 0,
                     'isbn': '',
                     'publisher': {
                         'name': '',
@@ -296,12 +300,7 @@ class ecmbBuilderBookConfig():
                 }
             case INIT_TYPE.TRANSLATED.value:
                 book_config['optional'] = {
-                    'isbn': '',
-                    'publisher': {
-                        'name': '',
-                        'href': ''
-                    },
-                    'publishdate': '0000-00-00|0000',
+                    'volume': 0,
                     'summary': '',
                     'notes': '',
                     'genres': ['Example1', 'Example2'],
@@ -309,18 +308,13 @@ class ecmbBuilderBookConfig():
                     'editors': editors,
                     'original': {
                         'language': '',
-                        'isbn': '',
-                        'publisher': {
-                            'name': '',
-                            'href': ''
-                        },
-                        'publishdate': '0000-00-00|0000',
                         'title': '',
                         'authors': authors
                     }
                 }
             case INIT_TYPE.BASIC.value:
                 book_config['optional'] = {
+                    'volume': 0,
                     'summary': '',
                     'notes': '',
                     'genres': ['Example1', 'Example2'],
@@ -332,30 +326,38 @@ class ecmbBuilderBookConfig():
 
         chapter_cnt = 0
         chapter_template = {
+            'dir': '',
             'label': '',
             'title': '',
             'start_with': 'my_image_name.jpg#left'
         }
 
         if volume_folders:
-            book_config['volumes'] = {}
+            del book_config['optional']['volume']
+            book_config['volumes'] = []
             for volume in volume_folders:
-                book_config['volumes'][volume['name']] = {}
+                vol_obj = {
+                    'dir': volume['name'],
+                    'chapters': []
+                }
+
                 for chapter in volume['chapters']:
                     label = re.sub(r'^(chapter_)?[0-9_ -]+', '', chapter['name'])
                     chapter_cnt += 1
-                    chapter_template.update({'label': label if label else f'Chapter {chapter_cnt}'})
-                    book_config['volumes'][volume['name']][chapter['name']] = dict(chapter_template)
+                    chapter_template.update({'dir': chapter['name'], 'label': label if label else f'Chapter {chapter_cnt}'})
+                    vol_obj['chapters'].append(dict(chapter_template))
+
+                book_config['volumes'].append(vol_obj)
         else: 
-            book_config['chapters'] = {}
+            book_config['chapters'] = []
             for chapter in chapter_folders:
                 label = re.sub(r'^(chapter_)?[0-9%_. +~-]+', '', chapter['name'], re.IGNORECASE)
                 if label:
                     chapter_template.update({'label': label})
                 else:
                     chapter_cnt += 1
-                    chapter_template.update({'label': f'Chapter {chapter_cnt}'})
-                book_config['chapters'][chapter['name']] = dict(chapter_template)
+                    chapter_template.update({'dir': chapter['name'], 'label': f'Chapter {chapter_cnt}'})
+                book_config['chapters'].append(dict(chapter_template))
 
         with open(self._source_dir + 'book_config.json', 'w') as f:
             json.dump( book_config, f, indent=4)
