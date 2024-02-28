@@ -42,47 +42,24 @@ class ecmbBuilderResizeBase(ABC):
         self._compress_all = compress_all
 
 
-    def process(self, fp_full: str|io.BytesIO) -> list[str|io.BytesIO]:
-        pillow_full = Image.open(fp_full)
-        width, height = pillow_full.size
+    def process(self, fp_image: str|io.BytesIO) -> str|io.BytesIO:
+        pillow_image = Image.open(fp_image)
+        width, height = pillow_image.size
 
         if (width / height) > (self._target_width / self._target_height * 1.5):
-            pillow_full, resized = self._resize(pillow_full, self._target_width * 2, self._target_height)
+            pillow_image, resized = self._resize(pillow_image, self._target_width * 2, self._target_height)
         else:
-            pillow_full, resized = self._resize(pillow_full, self._target_width, self._target_height)
+            pillow_image, resized = self._resize(pillow_image, self._target_width, self._target_height)
 
         if resized or self._compress_all:
-            fp_full = io.BytesIO()
-            pillow_full.save(fp_full, 'webp', quality = self._webp_compression, method=5)
+            fp_image = io.BytesIO()
+            pillow_image.save(fp_image, 'webp', quality = self._webp_compression, method=5)
+        else:
+            pillow_image.close()
 
-        return self._split_image(fp_full, pillow_full)
-    
-
-
-    def _split_image(self, fp_full: str|io.BytesIO, pillow_full: Image) -> list[str|io.BytesIO]:
-        width, height = pillow_full.size
-        
-        if (width / height) < (self._target_width / self._target_height * 1.5):
-            if type(fp_full) == str:
-                pillow_full.close()
-            return [fp_full]
-            
-        pillow_left = pillow_full.crop((0, 0, round(width/2), height))
-        fp_left = io.BytesIO()
-        pillow_left.save(fp_left, 'webp', quality = self._webp_compression, method=5)
-        del pillow_left
-        
-        pillow_right = pillow_full.crop((round(width/2), 0, width, height))
-        fp_right = io.BytesIO()
-        pillow_right.save(fp_right, 'webp', quality = self._webp_compression, method=5)
-        del pillow_right
-        
-        if type(fp_full) == str:
-            pillow_full.close()
-
-        return [fp_full, fp_left, fp_right]
+        return fp_image
     
 
     @abstractmethod
-    def _resize(self, pillow_full: Image, target_width: int, target_height: int) -> [io.BytesIO, Image]:
+    def _resize(self, pillow_image: Image, target_width: int, target_height: int) -> list[io.BytesIO, Image.Image]:
         pass

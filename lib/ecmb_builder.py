@@ -101,13 +101,13 @@ class ecmbBuilder(ecmbBuilderBase):
         if len(image_list):
             image_path = image_list[0]['path'] + image_list[0]['name']
             image = resize_method.process(image_path)
-            book.content.set_cover_front(image[0])
+            book.content.set_cover_front(image)
 
         image_list = ecmbBuilderUtils.list_files(volume_dir, None, r'^(r|rear|cover_rear)[.](jpg|jpeg|png|webp)$', 0)
         if len(image_list):
             image_path = image_list[0]['path'] + image_list[0]['name']
             image = resize_method.process(image_path)
-            book.content.set_cover_rear(image[0])
+            book.content.set_cover_rear(image)
             
 
     
@@ -118,10 +118,7 @@ class ecmbBuilder(ecmbBuilderBase):
             for image in image_list:
                 image_path = chapter['path'] + image['name']
                 image = resize_method.process(image_path)
-                if len(image) == 3:
-                    folder.add_image(image[0], image[1], image[2], unique_id=image_path)
-                else:
-                    folder.add_image(image[0], unique_id=image_path)
+                folder.add_image(image, unique_id=image_path)
             
             target = None
             target_side = None

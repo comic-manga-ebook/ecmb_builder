@@ -30,7 +30,7 @@ from .ecmb_builder_resize_max import ecmbBuilderResizeMax
 class ecmbBuilderResizeCropmax(ecmbBuilderResizeMax):
 
 
-    def _resize(self, pillow_orig: Image, final_width: int, final_height: int) -> [Image, bool]:
+    def _resize(self, pillow_orig: Image, final_width: int, final_height: int) -> list[Image.Image, bool]:
         orig_width, orig_height = pillow_orig.size
         
         pillow_tmp = ImageEnhance.Contrast(pillow_orig.convert('RGB')).enhance(5)
