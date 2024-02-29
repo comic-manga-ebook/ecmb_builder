@@ -30,7 +30,7 @@ from .ecmb_builder_enums import *
 from .ecmb_builder_utils import ecmbBuilderUtils
 from .ecmb_builder_base import ecmbBuilderBase
 from .resize.ecmb_builder_resize_base import ecmbBuilderResizeBase
-from ecmblib import ecmbBook, ecmbException
+from ecmblib import ecmbBook, ecmbUtils, ecmbException
 
 
 class ecmbBuilder(ecmbBuilderBase):
@@ -39,12 +39,21 @@ class ecmbBuilder(ecmbBuilderBase):
         if self._book_config.is_initialized:
             raise ecmbException('Book is allready initialized!')
         
-        (chapter_folders, volume_folders) = self._read_folder_structure()        
-        for chapter in chapter_folders:
-            if len(self._get_image_list(chapter['path'] + chapter['name'])) == 0:
-                raise ecmbException('Chapter-folder "' + chapter['path'] + chapter['name'] + '" is empty!')
+        chapter_folders = None
+        volume_folders = None
+        pro_folders = None
+        
+        if init_type == INIT_TYPE.PRO.value:
+            if not os.path.exists(self._source_dir_pro):
+                ecmbUtils.raise_exception(f'directory "contents" does not exist')
+            pro_folders = ecmbBuilderUtils.list_dirs_recursive(self._source_dir_pro, r'^(?!__).+$')
+        else:
+            (chapter_folders, volume_folders) = self._read_folder_structure()        
+            for chapter in chapter_folders:
+                if len(self._get_image_list(chapter['path'] + chapter['name'])) == 0:
+                    raise ecmbException('Chapter-folder "' + chapter['path'] + chapter['name'] + '" is empty!')
             
-        self._book_config.init_config(init_type, chapter_folders, volume_folders)
+        self._book_config.init_config(init_type, chapter_folders, volume_folders, pro_folders)
 
         print('\033[1;32;40m  Open "' + self._source_dir + 'book_config.json" and add all the meta-data to your book!\x1b[0m\n')
 
@@ -54,9 +63,13 @@ class ecmbBuilder(ecmbBuilderBase):
             raise ecmbException('Book is not initialized!')
         
         resize_method = self._load_resize_method()
+
         
-        if self._book_config.chapter_list:
-            self._build_book(resize_method, '', self._book_config.chapter_list, self._book_config.meta_data.get('volume') if self._book_config.meta_data.get('volume') else None )
+        if type(self._book_config.navigation_list) == list:
+            self._build_book(resize_method, '', None, self._book_config.navigation_list, self._book_config.meta_data.get('volume') )
+        
+        elif type(self._book_config.chapter_list)  == list:
+            self._build_book(resize_method, '', self._book_config.chapter_list, None, self._book_config.meta_data.get('volume') )
         else:
             if volumes != None:
                 volumes = volumes if type(volumes) == list else volumes.split(',')
@@ -67,13 +80,14 @@ class ecmbBuilder(ecmbBuilderBase):
                 volume_nr += 1
                 if volumes and str(volume_nr) not in volumes:
                     continue
-                self._build_book(resize_method, volume_dir, chapter_list, volume_nr)
+                self._build_book(resize_method, volume_dir, chapter_list, None, volume_nr)
 
 
-    def _build_book(self, resize_method: ecmbBuilderResizeBase, volume_dir: str, chapter_list: list, volume_nr: int = None) -> None:
+    def _build_book(self, resize_method: ecmbBuilderResizeBase, volume_dir: str, chapter_list: list, navigation_list: list, volume_nr: int = None) -> None:
         config = self._book_config
 
-        file_name = re.sub(r'[^a-zA-Z0-9]+', ' ', config.book_title).strip()
+        file_name = re.sub(r'[^a-zA-Z0-9_-]+', ' ', config.book_title)
+        file_name = re.sub(r'[\n\r\t ]+', ' ', file_name).strip()
         file_name += f' Vol.{volume_nr}' if volume_nr != None else ''
         file_name += '.ecmb'
 
@@ -84,7 +98,11 @@ class ecmbBuilder(ecmbBuilderBase):
 
         self._add_meta_data(book, volume_nr)
         self._set_cover(book, resize_method, volume_dir)
-        self._add_content(book, resize_method, chapter_list)
+        if chapter_list:
+            self._add_content(book, resize_method, chapter_list)
+        else: 
+            self._add_content_recursive(book, resize_method)
+            self._add_navigation(book, navigation_list)
 
         if not os.path.exists(self._output_dir):
             os.makedirs(self._output_dir)
@@ -128,6 +146,47 @@ class ecmbBuilder(ecmbBuilderBase):
                 target_side = start_with[1] if len(start_with) == 2 else None
 
             book.navigation.add_chapter(chapter.get('label'), folder, target, target_side, chapter.get('title'))
+
+
+    def _add_navigation(self, book: ecmbBook, navigation_list: list) -> None:
+        def add_recursive(navigation_list, parent_navigation):
+            for item in navigation_list:
+                if item['type'] == 'chapter':
+                    target = None
+                    target_side = None
+                    if item.get('start_with'):
+                        start_with = item.get('start_with').split('#')
+                        target = start_with[0]
+                        target_side = start_with[1] if len(start_with) == 2 else None
+                    chapter = parent_navigation.add_chapter(item['label'], item['path'], target, target_side, item.get('title'))
+                    add_recursive(item['children'], chapter)
+                elif item['type'] == 'headline':
+                    headline = parent_navigation.add_headline(item['label'], item.get('title'))
+                    add_recursive(item['children'], headline)
+                elif item['type'] == 'link':
+                    target_tmp = item.get('target').split('#')
+                    target = target_tmp[0]
+                    target_side = target_tmp[1] if len(target_tmp) == 2 else None
+                    chapter = parent_navigation.add_link(item['label'], target, target_side, item.get('title'))
+   
+        add_recursive(navigation_list, book.navigation)
+
+    
+    def _add_content_recursive(self, book: ecmbBook, resize_method: ecmbBuilderResizeBase) -> None:
+        tree_list = ecmbBuilderUtils.list_tree_recursive(self._source_dir_pro, r'^(?!__).+$', r'^(?!__).+[.](jpg|jpeg|png|webp)$')
+
+        def add_recursive(item, parent_folder):
+            if item['type'] == 'dir':
+                folder = parent_folder.add_folder(item['path'] + item['name'] + '\\')
+                for child in item['children']:
+                    add_recursive(child, folder)
+            else:
+                image_path = item['path'] + item['name']
+                image = resize_method.process(image_path)
+                parent_folder.add_image(image, unique_id=image_path)
+
+        for item in tqdm(tree_list, desc='  add content'):
+            add_recursive(item, book.content)
 
 
     def _add_meta_data(self, book: ecmbBook, volume_nr: int = None) -> None:

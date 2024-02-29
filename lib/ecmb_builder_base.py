@@ -40,6 +40,7 @@ class ecmbBuilderBase():
 
     _folder_name = None
     _source_dir = None
+    _source_dir_pro = None
     _output_dir = None
 
 
@@ -91,5 +92,6 @@ class ecmbBuilderBase():
 
         self._folder_name = folder_name
         self._source_dir = source_dir
+        self._source_dir_pro = source_dir + 'contents\\'
         self._output_dir = output_dir
         

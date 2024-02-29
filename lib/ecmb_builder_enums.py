@@ -42,3 +42,4 @@ class INIT_TYPE(Enum):
     BASIC = 'basic'
     TRANSLATED = 'translated'
     FULL = 'full'
+    PRO = 'pro'

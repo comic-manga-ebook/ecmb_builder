@@ -1,4 +1,4 @@
-ecmblib>=0.0.5
+ecmblib>=0.0.6
 invoke
 tqdm
 pyyaml
