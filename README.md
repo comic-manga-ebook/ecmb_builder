@@ -15,7 +15,11 @@
   - [Initialize the book](#initialize-the-book)
   - [Prepare for build](#prepare-for-build)
   - [Build the book(s)](#build-the-books)
-- [Building an advanced book](#building-an-advanced-book)
+- [Advanced book](#advanced-book)
+  - [Initialize an advanced book](#initialize-an-advanced-book)
+  - [The difference to a simple book](#the-difference-to-a-simple-book)
+  - [Prepare an advanced book for build](#prepare-an-advanced-book-for-build)
+  - [Build the book](#build-the-book)
 
 
 
@@ -229,10 +233,9 @@ If there is a prolog, spacer-images you don't want to delete or the chapter star
 
 <br/>
 
-## Building an advanced book
+## Advanced book
 
-## The source-files 
-Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.
+Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.<br />
 The naming of the files and folders is up to you! You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
 
 - the file- and folder-names are sorted alphanumeric
@@ -261,7 +264,7 @@ source_dir/
         ˪ cover_rear.jpg
 ```
 
-### Initialize the book
+### Initialize an advanced book
 
 **run:**
 - `invoke init pro "[MY_BOOK_FOLDER]"`
@@ -275,7 +278,7 @@ For a simple book the the reference to the source-folders is at the same time th
 Instead you can specify an advanced navigation, which supports chapters, headlines and links. You can do anything you want there as long the referred images and folders exist.
 
 
-### Prepare for build
+### Prepare an advanced book for build
 
 You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.<br />
 Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
@@ -313,13 +316,11 @@ Optional information you can leave empty, default or simply delete them if you d
 **Note!** if you want to link a double-page-image you could use `#left`, `#right` or `#auto`
 
 
-### Build the book(s)
+### Build the book
 
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke build "My_Book_Folder"` and press `[ENTER]` to build the book<br />
-  ![git_build](docs/git_build.jpg)<br /><br />
-- Done - your files are in the output-dir! __* yippee *__<br /><br/>
-  ![build](docs/build.jpg)
+- type `invoke build "My_Book_Folder"` and press `[ENTER]` to build the book
+- Done - your book is in the output-dir! __* yippee *__
 
 <br/>
