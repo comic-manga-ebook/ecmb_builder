@@ -95,7 +95,7 @@ source_dir/
 ```
 <br/>
 
-- the file- and folder-names are sorted alphanumerc (like every file-system)
+- the file- and folder-names are sorted alphanumeric (like every file-system)
 - files and folders starting with "__" (2 underscores) are ignored in general
 - allowed image-extension: jpg, jpeg, png, webp
 - if you have cover-images they have to have one of these names:
@@ -197,7 +197,7 @@ Done! (of course you have to check the result)<br /><br/>
 
 When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. The diffrence between those types is simply the number of values can set.<br />
 You could add values or write this file enterly manually if you want, but its a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
-Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Extra" in between the number won't be increased of course. Even other prefixes are than `chapter_[NUMBER]_` are supported. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
+Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Extra" in between the number won't be increased of course). Even other prefixes are than `chapter_[NUMBER]_` are supported. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
 
 **Note!** If your downloader allready created that file you can skip this step<br /><br/>
 
@@ -233,9 +233,9 @@ If there is a prolog, spacer-images you don't want to delete or the chapter star
 
 ## The source-files 
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.
-The naming of the files and folders is up to you, you can mix chapters and images like you want and can have as many levels of subfolders you want. 
+The naming of the files and folders is up to you! You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
 
-- the file- and folder-names are sorted alphanumerc
+- the file- and folder-names are sorted alphanumeric
 - files and folders starting with "__" (2 underscores) are ignored in general
 - allowed image-extension: jpg, jpeg, png, webp
 
@@ -266,11 +266,13 @@ source_dir/
 **run:**
 - `invoke init pro "[MY_BOOK_FOLDER]"`
 
-When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. Its a great help, but if you want you can write it enterly on your own or generate it with an external program.<br />
-Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Bonus" in between the number won't be increased of course. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
+When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. <br />
+Its a great help, but if you want you can write it enterly on your own or generate it with an external program.<br />
+Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Bonus" in between the number won't be increased of course). The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer).
 
 ### The difference to a simple book
-For a simple book the the reference to the source-folders is at the same time the navigation. For a professional book there is no reference to the contents - it simply imports everything whats in the folder "contents" - and instead you can specify an advanced navigation, which supports chapters, headlines and links. You can do anything you want there as long the referred images and folders exist.
+For a simple book the the reference to the source-folders is at the same time the navigation. For a professional book there is no reference to the contents - it simply imports everything whats in the folder "contents". <br/>
+Instead you can specify an advanced navigation, which supports chapters, headlines and links. You can do anything you want there as long the referred images and folders exist.
 
 
 ### Prepare for build
@@ -308,17 +310,14 @@ Optional information you can leave empty, default or simply delete them if you d
 }
 ```
 
-
-- what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters?<br />
-If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`<br/><br/>
+**Note!** if you want to link a double-page-image you could use `#left`, `#right` or `#auto`
 
 
 ### Build the book(s)
 
 - open the folder "ecmb_builder"
 - open the git-console with right-click (like you have done before)
-- type `invoke build "My_Book_Folder"` and press `[ENTER]` to build all volumes<br />
-  type `invoke build "My_Book_Folder" --volumes "1,2,5"` and press `[ENTER]` if you only want to build specific volumes<br /><br/>
+- type `invoke build "My_Book_Folder"` and press `[ENTER]` to build the book<br />
   ![git_build](docs/git_build.jpg)<br /><br />
 - Done - your files are in the output-dir! __* yippee *__<br /><br/>
   ![build](docs/build.jpg)
