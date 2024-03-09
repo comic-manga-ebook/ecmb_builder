@@ -72,7 +72,7 @@ source_dir/
         ˪ chapter_0003
         ˪ chapter_0004
         ˪ cover_front.jpg
-        ˪ cover_re.jpg
+        ˪ cover_rear.jpg
 ```
 or 
 ```
