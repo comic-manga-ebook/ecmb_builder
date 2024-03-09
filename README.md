@@ -37,7 +37,9 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
 
 ## Installation
 - download and install Python3 (>=3.11) [https://www.python.org/downloads/](https://www.python.org/downloads/)<br/>
-  Here is a little guide how to install python [https://www.digitalocean.com/community/tutorials/install-python-windows-10](https://www.digitalocean.com/community/tutorials/install-python-windows-10)
+  Here is a little guide how to install python on Windows [https://www.digitalocean.com/community/tutorials/install-python-windows-10](https://www.digitalocean.com/community/tutorials/install-python-windows-10)<br/>
+  Don't forget to check these 2 checkboxes!<br/>
+  ![Install](docs/python_install.png)
 - download and install Git [https://git-scm.com/downloads](https://git-scm.com/downloads)<br/>
   Here is a little guide how to install and open git console: [https://www.youtube.com/watch?v=lKYtK-DS0MY](https://www.youtube.com/watch?v=lKYtK-DS0MY)
 - create an empty folder on your harddisk (eg. "comic_manga") and open it
