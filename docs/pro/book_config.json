@@ -1,0 +1,95 @@
+{
+    "builder-config": {
+        "resize_method": "max",
+        "resize_width": 900,
+        "resize_height": 1200,
+        "webp_compression": 75,
+        "compress_all": true
+    },
+    "required": {
+        "type": "manga",
+        "language": "en",
+        "title": "Majo no Kishi"
+    },
+    "optional": {
+        "isbn": "0123456789",
+        "publishdate": "2019-10-20",
+        "summary": "The story revolves around a guy named Chord Belote, who is forced to become a knight, in order to support his poor family. He is treated as an errand boy, but he gets lost in a forest during one of his errands and meets the supposedly \"evil witch.\" (Source; Mangafox)",
+        "pages": 200,
+        "genres": [
+            "Ecchi",
+			"Fantasy",
+			"Shounen",
+			"Gender Bender"
+        ],
+        "warnings": [
+            "Nudity",
+            "Sexual Content"
+        ],
+        "authors": [
+            {
+                "name": "Champion RED",
+                "role": "Art",
+                "href": ""
+            },
+            {
+                "name": "Yasunori Ninose",
+                "role": "Story",
+                "href": ""
+            }
+        ]
+    },
+    "navigation": [
+		{
+			"type": "headline",
+			"label": "Highlights",
+			"title": "",
+			"children": [
+				{
+					"type": "link",
+					"label": "The Witch",
+					"title": "",
+					"target": "item_0001/item_0002/item_0003/item_0025.jpeg"
+				}
+			]
+		},
+		{
+			"type": "headline",
+			"label": "The Scary Chapters",
+			"title": "",
+			"children": [
+				{
+					"type": "chapter",
+					"dir": "item_0001",
+					"label": "Chapter 1",
+					"title": "",
+					"start_with": "item_0002/item_0003/item_0004.jpeg#right",
+					"children": [
+						{
+							"type": "chapter",
+							"dir": "item_0002",
+							"label": "Chapter 1.1",
+							"title": "",
+							"start_with": "item_0003/item_0004.jpeg#right",
+							"children": [
+								{
+									"type": "chapter",
+									"dir": "item_0003",
+									"label": "Chapter 1.1.1",
+									"title": "",
+									"start_with": "item_0004.jpeg#right",
+									"children": [
+										{
+											"type": "link",
+											"label": "The Witch",
+											"title": "",
+											"target": "item_0025.jpeg"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+}
