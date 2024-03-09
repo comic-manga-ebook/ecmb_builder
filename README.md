@@ -15,6 +15,7 @@
   - [Initialize the book](#initialize-the-book)
   - [Prepare for build](#prepare-for-build)
   - [Build the book(s)](#build-the-books)
+- [Building an advanced book](#building-an-advanced-book)
 
 
 
@@ -22,9 +23,6 @@
 ## About this repository
 This is a **simple-to-use builder** to build *.ecmb-files from your source-images without knowing anything about programming.<br/>
 In real life, when you have downloaded a comic or manga the files are really messy - the **file-cleaner**  will make it easier for you cleaning the contents.
-
-**Limitations:** <br />
-This builder only capable of creating simple books with no sub-folders or advanced navigation - it does not support the full capabilities of the file-format.
 
 Published under [MIT License](https://choosealicense.com/licenses/mit/)
 
@@ -199,7 +197,7 @@ Done! (of course you have to check the result)<br /><br/>
 
 When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. The diffrence between those types is simply the number of values can set.<br />
 You could add values or write this file enterly manually if you want, but its a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
-Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Extra" in between the number won't be increased of course.
+Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Extra" in between the number won't be increased of course. Even other prefixes are than `chapter_[NUMBER]_` are supported. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
 
 **Note!** If your downloader allready created that file you can skip this step<br /><br/>
 
@@ -215,6 +213,102 @@ Init will parse the folder-names of your chapters. If there is a name after the 
 
 - You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.<br />
 Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
+- what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters?<br />
+If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`<br/><br/>
+
+
+### Build the book(s)
+
+- open the folder "ecmb_builder"
+- open the git-console with right-click (like you have done before)
+- type `invoke build "My_Book_Folder"` and press `[ENTER]` to build all volumes<br />
+  type `invoke build "My_Book_Folder" --volumes "1,2,5"` and press `[ENTER]` if you only want to build specific volumes<br /><br/>
+  ![git_build](docs/git_build.jpg)<br /><br />
+- Done - your files are in the output-dir! __* yippee *__<br /><br/>
+  ![build](docs/build.jpg)
+
+<br/>
+
+## Building an advanced book
+
+## The source-files 
+Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.
+The naming of the files and folders is up to you, you can mix chapters and images like you want and can have as many levels of subfolders you want. 
+
+- the file- and folder-names are sorted alphanumerc
+- files and folders starting with "__" (2 underscores) are ignored in general
+- allowed image-extension: jpg, jpeg, png, webp
+
+File-Structure:
+```
+source_dir/
+    ˪ My_Book_Folder
+        ˪ contents
+            ˪ item_000010
+                 ˪ item_000010.jpg
+                 ˪ item_000020.jpg
+                 ˪ item_000030
+                       ˪ item_000010.jpg
+                       ˪ item_000020.jpg
+                       ˪ item_000030.jpg
+                       ˪ item_000040.jpg
+                 ˪ item_000040.jpg
+                 ˪ item_000050.jpg
+            ˪ item_000020
+            ˪ item_000030
+            ˪ item_000040_Bonus
+        ˪ cover_front.jpg
+        ˪ cover_rear.jpg
+```
+
+### Initialize the book
+
+**run:**
+- `invoke init pro "[MY_BOOK_FOLDER]"`
+
+When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. Its a great help, but if you want you can write it enterly on your own or generate it with an external program.<br />
+Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label - if not it will automatically name it `Chapter [NUMBER]`. If there is a Chapter like "Bonus" in between the number won't be increased of course. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
+
+### The difference to a simple book
+For a simple book the the reference to the source-folders is at the same time the navigation. For a professional book there is no reference to the contents - it simply imports everything whats in the folder "contents" - and instead you can specify an advanced navigation, which supports chapters, headlines and links. You can do anything you want there as long the referred images and folders exist.
+
+
+### Prepare for build
+
+You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.<br />
+Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
+
+**The Navigation:**
+```
+{
+    "type": "chapter",
+    "dir": "[MANDATORY PATH TO A FOLDER RELATIVE TO THE PARENT CHAPTER's PATH]",
+    "label": "[MANDATORY LABEL]",
+    "title": "[OPTIONAL TITLE]",
+    "start_with": "[OPTIONAL PATH TO AN IMAGE RELATIVE TO THIS CHAPTER's PATH]",
+    "children": []
+}
+```
+```
+{
+  "type": "headline",
+  "label": "[MANDATORY LABEL]",
+  "title": "[OPTIONAL TITLE]",
+  "children": [
+    ... at minimum 1 Child!!!!!!
+  ]
+}
+```
+```
+{
+  "type": "link",
+  "label": "[MANDATORY LABEL]",
+  "title": "[OPTIONAL TITLE]",
+  "target": "[MANDATORY PATH TO AN IMAGE RELATIVE TO THE PARENT CHAPTER's PATH]",
+}
+```
+
+
 - what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters?<br />
 If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`<br/><br/>
 
