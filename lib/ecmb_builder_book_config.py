@@ -52,10 +52,10 @@ class ecmbBuilderBookConfig():
     _volume_list = None
     _navigation_list = None
     
-    def __init__(self, builder_config: ecmbBuilderConfig, source_dir: str):
+    def __init__(self, builder_config: ecmbBuilderConfig, source_dir: str, source_dir_pro: str):
         self._builder_config = builder_config
         self._source_dir = source_dir
-        self._source_dir_pro = source_dir + 'contents\\'
+        self._source_dir_pro = source_dir_pro
         self._load_config()
 
     
@@ -111,7 +111,12 @@ class ecmbBuilderBookConfig():
         return self._navigation_list
     navigation_list: list = property(get_navigation_list)
 
+    ##################
+    # read
+    ##################
+
     def _load_config(self) -> None:
+
         if not os.path.exists(self._source_dir + 'book_config.json'):
             self._is_initialized = False
             return
@@ -141,93 +146,6 @@ class ecmbBuilderBookConfig():
             ecmbUtils.validate_regex(True, 'required -> language', config['required'].get('language'), r'^[a-z]{2}$')
             ecmbUtils.validate_not_empty_str(True, 'required -> title', config['required'].get('title'))
 
-            
-            def read_chapters(chapter_list, parent_dir, error_msg = ''):
-                ret = []
-                for chapter in chapter_list:
-                    ecmbUtils.validate_regex(True, f'{error_msg}chapters -> dir for label "' + str(chapter.get('label')) + '"', chapter.get('dir'), r'^[^\/\\]+$')
-                    chapter_dir = parent_dir + chapter['dir'] +'\\'
-                    if not os.path.exists(chapter_dir):
-                        ecmbUtils.raise_exception(f'{error_msg}chapters ("{chapter['dir']}") -> dir does not exist!')
-                    chapter['path'] = chapter_dir
-
-                    ecmbUtils.validate_not_empty_str(True, f'{error_msg}chapters ("{chapter['dir']}") -> label', chapter.get('label'))
-                    ecmbUtils.validate_str_or_none(True, f'{error_msg}chapters ("{chapter['dir']}") -> title', chapter.get('title'))
-
-                    # remove default_values
-                    chapter['start_with'] = None if chapter.get('start_with') == 'my_image_name.jpg#left' else chapter.get('start_with')
-                    if chapter['start_with']:
-                        ecmbUtils.validate_regex(True, f'{error_msg}chapters ("{chapter['dir']}") -> start_with', chapter.get('start_with'), r'^[^\/\\]+(#left|#right|#auto)?$')
-                        if not os.path.exists(chapter_dir + re.sub(r'#(left|right|auto)$', '', chapter['start_with'] )):
-                            ecmbUtils.raise_exception(f'{error_msg}chapters ("{chapter['dir']}") -> start_with does not exist!')
-                    
-                    ret.append(chapter)
-
-                if len(ret) == 0:
-                    ecmbUtils.raise_exception(f'{error_msg}no chapters available!')
-
-                return ret
-            
-            def check_forbidden(msg, obj, forbidden_list):
-                for forbidden in forbidden_list:
-                    if obj.get(forbidden):
-                        ecmbUtils.raise_exception(msg + f' -> "{forbidden}" is forbidden here! Maybe you have choosen the wrong type!')
-
-            def read_recursive(navigation_list, parent_dir):
-                ret = []
-                if navigation_list == None:
-                    return ret
-                
-                if type(navigation_list) != list:
-                    ecmbUtils.raise_exception(f'{parent_dir} -> child-list has to be a list or none!')
-                
-                for navigation in navigation_list:
-
-                    ecmbUtils.validate_not_empty_str(True, f'{parent_dir} -> child -> label', navigation.get('label'))
-                    ecmbUtils.validate_str_or_none(True, f'{parent_dir} -> child -> title', navigation.get('title'))
-
-                    if navigation.get('type') == 'chapter':
-                        ecmbUtils.validate_not_empty_str(True, f'{parent_dir} -> chapter ("{navigation['label']}") -> dir', navigation.get('dir'))
-                        chapter_dir = parent_dir + navigation['dir'].replace('/', '\\').strip('\\') + '\\'
-                        if not os.path.exists(self._source_dir_pro + chapter_dir):
-                            ecmbUtils.raise_exception(f'chapter-dir "{chapter_dir}" does not exist!')
-                        navigation['path'] = self._source_dir_pro + chapter_dir
-
-                        check_forbidden(f'chapter {chapter_dir}', navigation, ['target'])
-
-                        # remove default_values
-                        navigation['start_with'] = None if navigation.get('start_with') == 'my_image_name.jpg#left' else navigation.get('start_with')
-                        if navigation['start_with']:
-                            navigation['start_with'] = str(navigation['start_with']).replace('/', '\\').strip('\\') 
-                            ecmbUtils.validate_regex(True, f'{chapter_dir} -> start_with', navigation['start_with'], r'^[^#]+(#left|#right|#auto)?$')
-                            if not os.path.exists(self._source_dir_pro + chapter_dir + re.sub(r'#(left|right|auto)$', '', navigation['start_with'] )):
-                                ecmbUtils.raise_exception(f'{chapter_dir} -> start_with "{navigation['start_with']}" does not exist!')
-                            navigation['start_with'] = self._source_dir_pro + chapter_dir + navigation['start_with'] 
-
-                        navigation['children'] = read_recursive(navigation.get('children'), chapter_dir)
-
-                    elif navigation.get('type') == 'link':
-                        ecmbUtils.validate_regex(True, f'{parent_dir} -> link ("{navigation['label']}") -> target', navigation.get('target'), r'^[^#]+(#left|#right|#auto)?$')
-                        navigation['target'] = str(navigation['target']).replace('/', '\\').strip('\\') 
-                        if not os.path.exists(self._source_dir_pro + parent_dir + re.sub(r'#(left|right|auto)$', '', navigation['target'] )):
-                            ecmbUtils.raise_exception(f'{parent_dir} -> link ("{navigation['label']}") -> target "{navigation['target']}" does not exist!')
-                        navigation['target'] = self._source_dir_pro + parent_dir + navigation['target']
-                        
-                        check_forbidden(f'{parent_dir} -> link ("{navigation['label']}")', navigation, ['start_with', 'dir'])
-
-                    elif navigation.get('type') == 'headline':
-                        navigation['children'] = read_recursive(navigation.get('children'), parent_dir)
-                        if len(navigation['children']) == 0:
-                            ecmbUtils.raise_exception(f'{parent_dir} -> headline ("{navigation['label']}") -> doesn\'t have childs!')
-                        
-                        check_forbidden(f'{parent_dir} -> link ("{navigation['label']}")', navigation, ['start_with', 'dir', 'target'])
-
-                    else:
-                        ecmbUtils.raise_exception(f'{parent_dir} -> child with label "{navigation['label']}" has an invalid type!')
-
-                    ret.append(navigation)
-                return ret
-
             if type(config.get('volumes')) == list:
                 self._volume_list = {}
                 for volume in config.get('volumes'):
@@ -236,21 +154,20 @@ class ecmbBuilderBookConfig():
                     if not os.path.exists(volume_dir):
                         ecmbUtils.raise_exception(f'directory for volume "{volume['dir']}" is missing!')
 
-                    self._volume_list[volume['dir']] = read_chapters(volume['chapters'], volume_dir, f'volumes ("{volume['dir']}") -> ')
+                    self._volume_list[volume['dir']] = self._load_chapters(volume['chapters'], volume_dir, f'volumes ("{volume['dir']}") -> ')
                 
                 if len(self._volume_list) == 0:
                     ecmbUtils.raise_exception(f'no volumes available!')
 
             elif type(config.get('chapters')) == list:
-                self._chapter_list = read_chapters(config.get('chapters'), self._source_dir)
+                self._chapter_list = self._load_chapters(config.get('chapters'), self._source_dir)
 
             elif type(config.get('navigation')) == list:
-                self._navigation_list = read_recursive(config.get('navigation'), '')
+                self._navigation_list = self._load_navigation_recursive(config.get('navigation'), '')
 
         except ecmbException as e:
             raise ecmbException('Your "book_config.json" contains an invalid value or the value is missing:\n' + str(e))
         
-
         self._compress_all = True if config['builder-config'].get('compress_all') else False
 
         self._resize_method = config['builder-config'].get('resize_method') 
@@ -305,21 +222,106 @@ class ecmbBuilderBookConfig():
 
         self._meta_data = config.get('optional')
         self._is_initialized = True
+
+
+    def _load_chapters(self, chapter_list: list, parent_dir: str, error_msg: str = '') -> list:
+        ret = []
+        for chapter in chapter_list:
+            ecmbUtils.validate_regex(True, f'{error_msg}chapters -> dir for label "' + str(chapter.get('label')) + '"', chapter.get('dir'), r'^[^\/\\]+$')
+            chapter_dir = parent_dir + chapter['dir'] +'\\'
+            if not os.path.exists(chapter_dir):
+                ecmbUtils.raise_exception(f'{error_msg}chapters ("{chapter['dir']}") -> dir does not exist!')
+            chapter['path'] = chapter_dir
+
+            ecmbUtils.validate_not_empty_str(True, f'{error_msg}chapters ("{chapter['dir']}") -> label', chapter.get('label'))
+            ecmbUtils.validate_str_or_none(True, f'{error_msg}chapters ("{chapter['dir']}") -> title', chapter.get('title'))
+
+            # remove default_values
+            chapter['start_with'] = None if chapter.get('start_with') == 'my_image_name.jpg#left' else chapter.get('start_with')
+            if chapter['start_with']:
+                ecmbUtils.validate_regex(True, f'{error_msg}chapters ("{chapter['dir']}") -> start_with', chapter.get('start_with'), r'^[^\/\\]+(#left|#right|#auto)?$')
+                if not os.path.exists(chapter_dir + re.sub(r'#(left|right|auto)$', '', chapter['start_with'] )):
+                    ecmbUtils.raise_exception(f'{error_msg}chapters ("{chapter['dir']}") -> start_with does not exist!')
+            
+            ret.append(chapter)
+
+        if len(ret) == 0:
+            ecmbUtils.raise_exception(f'{error_msg}no chapters available!')
+
+        return ret
+    
+    
+    def _check_navigation_forbidden_param(self, msg: str, obj: dict, forbidden_list: list) -> None:
+        for forbidden in forbidden_list:
+            if obj.get(forbidden):
+                ecmbUtils.raise_exception(msg + f' -> "{forbidden}" is forbidden here! Maybe you have choosen the wrong type!')
+
+
+    def _load_navigation_recursive(self, navigation_list: list, parent_dir: str) -> list:
+        ret = []
+        if navigation_list == None:
+            return ret
+        
+        if type(navigation_list) != list:
+            ecmbUtils.raise_exception(f'{parent_dir} -> child-list has to be a list or none!')
+        
+        for navigation in navigation_list:
+
+            ecmbUtils.validate_not_empty_str(True, f'{parent_dir} -> child -> label', navigation.get('label'))
+            ecmbUtils.validate_str_or_none(True, f'{parent_dir} -> child -> title', navigation.get('title'))
+
+            if navigation.get('type') == 'chapter':
+                ecmbUtils.validate_not_empty_str(True, f'{parent_dir} -> chapter ("{navigation['label']}") -> dir', navigation.get('dir'))
+                chapter_dir = parent_dir + navigation['dir'].replace('/', '\\').strip('\\') + '\\'
+                if not os.path.exists(self._source_dir_pro + chapter_dir):
+                    ecmbUtils.raise_exception(f'chapter-dir "{chapter_dir}" does not exist!')
+                navigation['path'] = self._source_dir_pro + chapter_dir
+
+                self._check_navigation_forbidden_param(f'chapter {chapter_dir}', navigation, ['target'])
+
+                # remove default_values
+                navigation['start_with'] = None if navigation.get('start_with') == 'my_image_name.jpg#left' else navigation.get('start_with')
+                if navigation['start_with']:
+                    navigation['start_with'] = str(navigation['start_with']).replace('/', '\\').strip('\\') 
+                    ecmbUtils.validate_regex(True, f'{chapter_dir} -> start_with', navigation['start_with'], r'^[^#]+(#left|#right|#auto)?$')
+                    if not os.path.exists(self._source_dir_pro + chapter_dir + re.sub(r'#(left|right|auto)$', '', navigation['start_with'] )):
+                        ecmbUtils.raise_exception(f'{chapter_dir} -> start_with "{navigation['start_with']}" does not exist!')
+                    navigation['start_with'] = self._source_dir_pro + chapter_dir + navigation['start_with'] 
+
+                navigation['children'] = self._load_navigation_recursive(navigation.get('children'), chapter_dir)
+
+            elif navigation.get('type') == 'link':
+                ecmbUtils.validate_regex(True, f'{parent_dir} -> link ("{navigation['label']}") -> target', navigation.get('target'), r'^[^#]+(#left|#right|#auto)?$')
+                navigation['target'] = str(navigation['target']).replace('/', '\\').strip('\\') 
+                if not os.path.exists(self._source_dir_pro + parent_dir + re.sub(r'#(left|right|auto)$', '', navigation['target'] )):
+                    ecmbUtils.raise_exception(f'{parent_dir} -> link ("{navigation['label']}") -> target "{navigation['target']}" does not exist!')
+                navigation['target'] = self._source_dir_pro + parent_dir + navigation['target']
+                
+                self._check_navigation_forbidden_param(f'{parent_dir} -> link ("{navigation['label']}")', navigation, ['start_with', 'dir'])
+
+            elif navigation.get('type') == 'headline':
+                navigation['children'] = self._load_navigation_recursive(navigation.get('children'), parent_dir)
+                if len(navigation['children']) == 0:
+                    ecmbUtils.raise_exception(f'{parent_dir} -> headline ("{navigation['label']}") -> doesn\'t have childs!')
+                
+                self._check_navigation_forbidden_param(f'{parent_dir} -> link ("{navigation['label']}")', navigation, ['start_with', 'dir', 'target'])
+
+            else:
+                ecmbUtils.raise_exception(f'{parent_dir} -> child with label "{navigation['label']}" has an invalid type!')
+
+            ret.append(navigation)
+
+        return ret
     
 
+    ############
+    # write
+    ############
+
     def init_config(self, init_type: INIT_TYPE, chapter_folders: list, volume_folders: list = None, pro_folders: list = None) -> None:
+
         if self._is_initialized:
             ecmbUtils.raise_exception('Book is allready initialized!')
-        
-        init_type = ecmbUtils.enum_value(init_type)
-        ecmbUtils.validate_enum(True, 'init_type', init_type, INIT_TYPE)
-
-        warnings = ecmbUtils.enum_values(CONTENT_WARNING)
-        based_on_type = ecmbUtils.enum_values(BASED_ON_TYPE)
-        authors = ecmbUtils.enum_values(AUTHOR_ROLE)
-        authors = [{'name': '', 'role': at, 'href': ''} for at in authors]
-        editors = ecmbUtils.enum_values(EDITOR_ROLE)
-        editors = [{'name': '', 'role': at, 'href': ''} for at in editors]
 
         book_config = {
             'builder-config': {
@@ -336,14 +338,18 @@ class ecmbBuilderBookConfig():
             },
         }
 
+        warnings = ecmbUtils.enum_values(CONTENT_WARNING)
+        based_on_type = ecmbUtils.enum_values(BASED_ON_TYPE)
+        authors = ecmbUtils.enum_values(AUTHOR_ROLE)
+        authors = [{'name': '', 'role': at, 'href': ''} for at in authors]
+        editors = ecmbUtils.enum_values(EDITOR_ROLE)
+        editors = [{'name': '', 'role': at, 'href': ''} for at in editors]
+
         if init_type ==  INIT_TYPE.FULL.value or init_type == INIT_TYPE.PRO.value:
             book_config['optional'] = {
                 'volume': 0,
                 'isbn': '',
-                'publisher': {
-                    'name': '',
-                    'href': ''
-                },
+                'publisher': {'name': '', 'href': ''},
                 'publishdate': '0000-00-00|0000',
                 'summary': '',
                 'pages': 0,
@@ -355,10 +361,7 @@ class ecmbBuilderBookConfig():
                 'original': {
                     'language': '',
                     'isbn': '',
-                    'publisher': {
-                        'name': '',
-                        'href': ''
-                    },
+                    'publisher': {'name': '', 'href': ''},
                     'publishdate': '0000-00-00|0000',
                     'title': '',
                     'authors': authors
@@ -367,10 +370,7 @@ class ecmbBuilderBookConfig():
                     'type': '|'.join(based_on_type),
                     'language': '',
                     'isbn': '',
-                    'publisher': {
-                        'name': '',
-                        'href': ''
-                    },
+                    'publisher': {'name': '', 'href': ''},
                     'publishdate': '0000-00-00|0000',
                     'title': '',
                     'authors': authors
@@ -411,37 +411,8 @@ class ecmbBuilderBookConfig():
             'start_with': 'my_image_name.jpg#left'
         }
 
-        def build_chapters(chapter_folders, chapter_cnt):
-            res = []
-            for chapter in chapter_folders:
-                ele = dict(chapter_template)
-                label = re.sub(r'^(chapter_|page_|item_)?[0-9%_. +~-]+', '', chapter['name'], re.IGNORECASE)
-                if label:
-                    ele.update({'dir': chapter['name'], 'label': label})
-                else:
-                    chapter_cnt += 1
-                    ele.update({'dir': chapter['name'], 'label': f'Chapter {chapter_cnt}'})
-                res.append(ele)
-            return (res, chapter_cnt)
-        
-        def build_recursive(folder_list, parent_chapter_nr_str):
-                res = []
-                chapter_cnt = 0
-                for folder in folder_list:
-                    ele = dict(chapter_template)
-                    label = re.sub(r'^(chapter_|page_|item_)?[0-9%_. +~-]+', '', folder['name'], re.IGNORECASE)
-                    if label:
-                        ele.update({'dir': folder['name'], 'label': label})
-                    else:
-                        chapter_cnt += 1
-                        chapter_nr_str = parent_chapter_nr_str + '.' + str(chapter_cnt) if parent_chapter_nr_str else str(chapter_cnt)
-                        ele.update({'dir': folder['name'], 'label': label if label else f'Chapter '+chapter_nr_str})
-                    ele.update({'children': build_recursive(folder['children'], chapter_nr_str)})
-                    res.append(ele)
-                return res
-
         if  pro_folders:
-            book_config['navigation'] = build_recursive(pro_folders, '')
+            book_config['navigation'] = self._init_navigation_recursive(chapter_template, pro_folders, '')
             
         elif volume_folders:
             del chapter_template['type']
@@ -449,14 +420,14 @@ class ecmbBuilderBookConfig():
             book_config['volumes'] = []
             chapter_cnt = 0
             for volume in volume_folders:
-                chapter_list, chapter_cnt = build_chapters(volume['chapters'], chapter_cnt)
+                chapter_list, chapter_cnt = self._init_chapters(chapter_template, volume['chapters'], chapter_cnt)
                 book_config['volumes'].append({
                     'dir': volume['name'],
                     'chapters': chapter_list
                 })
         else:
             del chapter_template['type']
-            chapter_list, chapter_cnt = build_chapters(chapter_folders, 0)
+            chapter_list, chapter_cnt = self._init_chapters(chapter_template, chapter_folders, 0)
             book_config['chapters'] = chapter_list
 
 
@@ -465,3 +436,35 @@ class ecmbBuilderBookConfig():
 
 
         self._load_config()
+
+
+
+    def _init_chapters(self, chapter_template: dict, chapter_folders: list, chapter_cnt: int) -> tuple[list, int]:
+        res = []
+        for chapter in chapter_folders:
+            ele = dict(chapter_template)
+            label = re.sub(r'^(chapter_|page_|item_)?[0-9%_. +~-]+', '', chapter['name'], re.IGNORECASE)
+            if label:
+                ele.update({'dir': chapter['name'], 'label': label})
+            else:
+                chapter_cnt += 1
+                ele.update({'dir': chapter['name'], 'label': f'Chapter {chapter_cnt}'})
+            res.append(ele)
+        return (res, chapter_cnt)
+    
+
+    def _init_navigation_recursive(self, chapter_template: dict, folder_list: list, parent_chapter_nr_str: str) -> list:
+            res = []
+            chapter_cnt = 0
+            for folder in folder_list:
+                ele = dict(chapter_template)
+                label = re.sub(r'^(chapter_|page_|item_)?[0-9%_. +~-]+', '', folder['name'], re.IGNORECASE)
+                if label:
+                    ele.update({'dir': folder['name'], 'label': label})
+                else:
+                    chapter_cnt += 1
+                    chapter_nr_str = parent_chapter_nr_str + '.' + str(chapter_cnt) if parent_chapter_nr_str else str(chapter_cnt)
+                    ele.update({'dir': folder['name'], 'label': label if label else f'Chapter '+chapter_nr_str})
+                ele.update({'children': self._init_navigation_recursive(chapter_template, folder['children'], chapter_nr_str)})
+                res.append(ele)
+            return res

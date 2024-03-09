@@ -39,19 +39,17 @@ class ecmbBuilder(ecmbBuilderBase):
         if self._book_config.is_initialized:
             raise ecmbException('Book is allready initialized!')
         
+        init_type = ecmbUtils.enum_value(init_type)
+        ecmbUtils.validate_enum(True, 'init_type', init_type, INIT_TYPE)
+        
         chapter_folders = None
         volume_folders = None
         pro_folders = None
         
         if init_type == INIT_TYPE.PRO.value:
-            if not os.path.exists(self._source_dir_pro):
-                ecmbUtils.raise_exception(f'directory "contents" does not exist')
-            pro_folders = ecmbBuilderUtils.list_dirs_recursive(self._source_dir_pro, r'^(?!__).+$')
+            pro_folders = self._read_pro_folders()
         else:
             (chapter_folders, volume_folders) = self._read_folder_structure()        
-            for chapter in chapter_folders:
-                if len(self._get_image_list(chapter['path'] + chapter['name'])) == 0:
-                    raise ecmbException('Chapter-folder "' + chapter['path'] + chapter['name'] + '" is empty!')
             
         self._book_config.init_config(init_type, chapter_folders, volume_folders, pro_folders)
 
@@ -63,13 +61,13 @@ class ecmbBuilder(ecmbBuilderBase):
             raise ecmbException('Book is not initialized!')
         
         resize_method = self._load_resize_method()
-
         
         if type(self._book_config.navigation_list) == list:
             self._build_book(resize_method, '', None, self._book_config.navigation_list, self._book_config.meta_data.get('volume') )
         
         elif type(self._book_config.chapter_list)  == list:
             self._build_book(resize_method, '', self._book_config.chapter_list, None, self._book_config.meta_data.get('volume') )
+
         else:
             if volumes != None:
                 volumes = volumes if type(volumes) == list else volumes.split(',')
@@ -173,8 +171,6 @@ class ecmbBuilder(ecmbBuilderBase):
 
     
     def _add_content_recursive(self, book: ecmbBook, resize_method: ecmbBuilderResizeBase) -> None:
-        tree_list = ecmbBuilderUtils.list_tree_recursive(self._source_dir_pro, r'^(?!__).+$', r'^(?!__).+[.](jpg|jpeg|png|webp)$')
-
         def add_recursive(item, parent_folder):
             if item['type'] == 'dir':
                 folder = parent_folder.add_folder(item['path'] + item['name'] + '\\')
@@ -185,6 +181,7 @@ class ecmbBuilder(ecmbBuilderBase):
                 image = resize_method.process(image_path)
                 parent_folder.add_image(image, unique_id=image_path)
 
+        tree_list = self._get_tree_list()
         for item in tqdm(tree_list, desc='  add content'):
             add_recursive(item, book.content)
 

@@ -47,10 +47,16 @@ class ecmbBuilderBase():
     def __init__(self, folder_name:str):
         self._builder_config = ecmbBuilderConfig()
         self._set_dirs(folder_name)
-        self._book_config = ecmbBuilderBookConfig(self._builder_config, self._source_dir)
+        self._book_config = ecmbBuilderBookConfig(self._builder_config, self._source_dir, self._source_dir_pro)
 
 
-    def _read_folder_structure(self) -> None:
+    def _check_empty_folders(self, chapter_folders: list) -> None:
+        for chapter in chapter_folders:
+            if len(self._get_image_list(chapter['path'] + chapter['name'])) == 0:
+                raise ecmbException('Chapter-folder "' + chapter['path'] + chapter['name'] + '" is empty!')
+            
+
+    def _read_folder_structure(self) -> tuple[list, list]:
         folder_list = ecmbBuilderUtils.list_dirs(self._source_dir, r'^(?!__).+$', 2)
         level0_folders = []
         level1_folders = []
@@ -63,6 +69,7 @@ class ecmbBuilderBase():
         if len(level0_folders) > len(level1_folders):  
             if len(level0_folders) == 0:
                 raise ecmbException('No chapter-folders available!')
+            self._check_empty_folders(level0_folders)
             return (level0_folders, None)
         else:
             for volume in level0_folders:
@@ -75,11 +82,22 @@ class ecmbBuilderBase():
                 if len(volume['chapters']) == 0:
                     raise ecmbException('"'+ volume['name'] + '" has no chapters!')
 
+            self._check_empty_folders(level1_folders)
             return (level1_folders, level0_folders)
+        
+        
+    def _read_pro_folders(self) -> list:
+        if not os.path.exists(self._source_dir_pro):
+            ecmbException(f'directory "contents" does not exist')
+        return ecmbBuilderUtils.list_dirs_recursive(self._source_dir_pro, r'^(?!__).+$')
         
     
     def _get_image_list(self, path: str) -> list:
         return ecmbBuilderUtils.list_files(path, None, r'^(?!__).+[.](jpg|jpeg|png|webp)$', 0)
+    
+    
+    def _get_tree_list(self) -> list:
+        return ecmbBuilderUtils.list_tree_recursive(self._source_dir_pro, r'^(?!__).+$', r'^(?!__).+[.](jpg|jpeg|png|webp)$')
 
 
     def _set_dirs(self, folder_name: str) -> None:
