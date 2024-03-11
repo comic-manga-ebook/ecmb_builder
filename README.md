@@ -280,7 +280,7 @@ Init will parse the folder-names of your chapters. If there is a name after the 
 
 ### The difference to a simple book
 For a simple book, the reference to the source-folders is at the same time the navigation. For a professional book there is no reference to the contents - it simply imports everything what is in the folder "contents". <br/>
-Instead, you can specify an advanced navigation, which supports chapters, headlines and links. You can do anything you want there as long the referred images and folders exist.
+Instead, you can specify an advanced navigation, which supports chapters, headlines and links. You can do anything you want, as long the referred images and folders exist.
 
 
 ### Prepare an advanced book for build
@@ -330,4 +330,5 @@ Optional information you can leave empty, default or simply delete them if you d
 - type `invoke build "My_Book_Folder"` and press `[ENTER]` to build the book
 - Done - your book is in the output-dir! __* yippee *__
 
+<br/>
 <br/>
