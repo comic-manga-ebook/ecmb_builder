@@ -64,7 +64,7 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
 ## The source-files (in a perfect world)
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file). The naming of the files and folders is up to you, but I suggest using either my format or at least numeric names/prefixes.
 
-- the file- and folder-names are sorted alphanumeric (like every file-system)
+- the file- and folder-names are sorted alphanumerically (like every file-system)
 - files and folders starting with "__" (2 underscores) are ignored in general
 - allowed image-extension: jpg, jpeg, png, webp
 
@@ -145,7 +145,7 @@ Of course you want to clean that mess and the file-cleaner will make it easier f
 
 **Functions:**
 
-Functions will sort the names alphanumerical and will preserve their order.
+Functions will sort the names alphanumerically and will preserve their order.
 - `zeropad`<br/>
   will prefix everything with 0000
 - `prefix`<br/>
@@ -243,7 +243,7 @@ If there is a prologue, spacer-images you don't want to delete or the chapter st
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.<br />
 The naming of the files and folders is up to you, but I suggest using either my format or at least numeric names/prefixes. You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
 
-- the file- and folder-names are sorted alphanumeric
+- the file- and folder-names are sorted alphanumerically
 - files and folders starting with "__" (2 underscores) are ignored in general
 - allowed image-extension: jpg, jpeg, png, webp
 
