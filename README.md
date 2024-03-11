@@ -40,7 +40,7 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
 
 ## Installation
 - download and install Python3 (>=3.11) [https://www.python.org/downloads/](https://www.python.org/downloads/)<br/>
-  Here is a little guide how to install python on Windows [https://www.digitalocean.com/community/tutorials/install-python-windows-10](https://www.digitalocean.com/community/tutorials/install-python-windows-10)<br/>
+  Here is a little guide how to install python on Windows [https://www.digitalocean.com/community/tutorials/install-python-windows-10](https://www.digitalocean.com/community/tutorials/install-python-windows-10)<br/><br/>
   Don't forget to check these 2 checkboxes!<br/>
   ![Install](docs/python_install.png)
 - download and install Git [https://git-scm.com/downloads](https://git-scm.com/downloads)<br/>
@@ -193,7 +193,7 @@ After that it should look like this, of course after you added "Extra" manually:
 ![git_group_volumes](docs/git_group_volumes.jpg)<br /><br />
 Done! (of course you have to check the result)<br /><br/>
 ![group_volumes](docs/group_volumes.jpg)<br /><br />
-- As a final step, it would be a good idea to add at least the front-covers now!<br/><br/>
+- As a final step, it would be a good idea to add at least the front-cover to every volume now!<br/><br/>
 
 ## Using the builder
 
