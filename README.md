@@ -7,6 +7,7 @@
 - [About this repository](#about-this-repository)
 - [Installation](#installation)
 - [The source-files (in a perfect world)](#the-source-files-in-a-perfect-world)
+  - [Cover-Images](#cover-images)
 - [The source-files (in real life)](#the-source-files-in-real-life)
 - [Using the file-cleaner](#using-the-file-cleaner)
   - [Available functions](#available-functions)
@@ -104,7 +105,7 @@ source_dir/
 <br/>
 
 
-## Cover-Images
+### Cover-Images
 
 If you have cover-images they have to have one of these names:
 
