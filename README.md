@@ -318,6 +318,8 @@ Optional information you can leave empty, default or simply delete them if you d
 }
 ```
 
+**[Example >>](docs/pro/book_config.json)**
+
 **Note!** if you want to link a double-page-image you could use `#left`, `#right` or `#auto`
 
 
