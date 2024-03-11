@@ -443,7 +443,7 @@ class ecmbBuilderBookConfig():
         res = []
         for chapter in chapter_folders:
             ele = dict(chapter_template)
-            label = re.sub(r'^(chapter_|page_|item_)?[0-9%_. +~-]+', '', chapter['name'], re.IGNORECASE)
+            label = re.sub(r'^(chapter|page|item)?[0-9%_. +~-]+', '', chapter['name'], re.IGNORECASE)
             if label:
                 ele.update({'dir': chapter['name'], 'label': label})
             else:
@@ -458,7 +458,7 @@ class ecmbBuilderBookConfig():
             chapter_cnt = 0
             for folder in folder_list:
                 ele = dict(chapter_template)
-                label = re.sub(r'^(chapter_|page_|item_)?[0-9%_. +~-]+', '', folder['name'], re.IGNORECASE)
+                label = re.sub(r'^(chapter|page|item)?[0-9%_. +~-]+', '', folder['name'], re.IGNORECASE)
                 if label:
                     ele.update({'dir': folder['name'], 'label': label})
                 else:

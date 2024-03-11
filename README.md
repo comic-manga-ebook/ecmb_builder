@@ -206,7 +206,7 @@ Done! (of course you have to check the result)<br /><br/>
 
 When you initialize a book, a file named `book_config.json` will be generated in the source-folder of your book. The difference between those types is simply the number of values you can set.<br />
 You could add values or write this file entirely manually if you want, but it is a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
-Init will parse the folder-names of your chapters. If there is a name after the prefix, it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Extra" in between the number won't be increased of course). Even other prefixes are than `chapter_[NUMBER]_` are supported. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
+Init will parse the folder-names of your chapters. If there is a name after the prefix, it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Extra" in between the number won't be increased of course). Even other prefixes are than `chapter_[NUMBER]_` are supported. The Regex for the prefix is: `^(chapter|item)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
 
 **Note!** If your downloader already created that file you can skip this step<br /><br/>
 
@@ -276,7 +276,7 @@ source_dir/
 
 When you initialize a book, a file named `book_config.json` will be generated in the source-folder of your book. <br />
 It is a great help, but if you want, you can write it entirely on your own or generate it with an external program.<br />
-Init will parse the folder-names of your chapters. If there is a name after the prefix, it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Bonus" in between the number won't be increased of course). The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer).
+Init will parse the folder-names of your chapters. If there is a name after the prefix, it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Bonus" in between the number won't be increased of course). The Regex for the prefix is: `^(chapter|item)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer).
 
 ### The difference to a simple book
 For a simple book, the reference to the source-folders is at the same time the navigation. For a professional book there is no reference to the contents - it simply imports everything what is in the folder "contents". <br/>
