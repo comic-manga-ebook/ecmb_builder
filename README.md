@@ -61,7 +61,11 @@ Copyright (c) 2023 Clemens K. (https://github.com/metacreature)
 <br />
 
 ## The source-files (in a perfect world)
-Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file)
+Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file). The naming of the files and folders is up to you, but I suggest to use either my format or at least numeric names/prefixes.
+
+- the file- and folder-names are sorted alphanumeric (like every file-system)
+- files and folders starting with "__" (2 underscores) are ignored in general
+- allowed image-extension: jpg, jpeg, png, webp
 
 File-Structure:
 ```
@@ -99,10 +103,10 @@ source_dir/
 ```
 <br/>
 
-- the file- and folder-names are sorted alphanumeric (like every file-system)
-- files and folders starting with "__" (2 underscores) are ignored in general
-- allowed image-extension: jpg, jpeg, png, webp
-- if you have cover-images they have to have one of these names:
+
+## Cover-Images
+
+If you have cover-images they have to have one of these names:
 
 | Front-Cover:     | Rear-Cover:     |
 | ---------------- | --------------- |
@@ -236,7 +240,7 @@ If there is a prolog, spacer-images you don't want to delete or the chapter star
 ## Advanced book
 
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.<br />
-The naming of the files and folders is up to you! You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
+The naming of the files and folders is up to you, but I suggest to use either my format or at least numeric names/prefixes. You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
 
 - the file- and folder-names are sorted alphanumeric
 - files and folders starting with "__" (2 underscores) are ignored in general
