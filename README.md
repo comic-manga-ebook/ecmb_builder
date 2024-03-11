@@ -193,7 +193,7 @@ After that it should look like this, of course after you added "Extra" manually:
 ![git_group_volumes](docs/git_group_volumes.jpg)<br /><br />
 Done! (of course you have to check the result)<br /><br/>
 ![group_volumes](docs/group_volumes.jpg)<br /><br />
-- As a final step it would be a good idea to add at least the front-covers now!<br/><br/>
+- As a final step, it would be a good idea to add at least the front-covers now!<br/><br/>
 
 ## Using the builder
 
@@ -204,8 +204,8 @@ Done! (of course you have to check the result)<br /><br/>
 - `translated`
 - `full`
 
-When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. The diffrence between those types is simply the number of values can set.<br />
-You could add values or write this file enterly manually if you want, but its a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
+When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. The difference between those types is simply the number of values can set.<br />
+You could add values or write this file entirely manually if you want, but it is a great help if you generate it with `init`. If you delete the file you have to run init again (or create it manually).<br />
 Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Extra" in between the number won't be increased of course). Even other prefixes are than `chapter_[NUMBER]_` are supported. The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer)
 
 **Note!** If your downloader allready created that file you can skip this step<br /><br/>
@@ -223,7 +223,7 @@ Init will parse the folder-names of your chapters. If there is a name after the 
 - You should open the file `book_config.json` with a simple text-editor and add the meta-data like summary, genres.<br />
 Optional information you can leave empty, default or simply delete them if you don't need it. If you leave them to default they won't appear in the book.
 - what the hell is `"start_with": "my_image_name.jpg#left"` at the chapters?<br />
-If there is a prolog, spacer-images you don't want to delete or the chapter starts with a double-page-image its good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`<br/><br/>
+If there is a prologue, spacer-images you don't want to delete or the chapter starts with a double-page-image it is good to specify where the reader-app should jump, if you click on a chapter. When I was building ePub-files it was really confusing that the chapter started with a "random" image instead of the chapter's title-image. For double-page-images you could use `#left`, `#right` or `#auto`<br/><br/>
 
 
 ### Build the book(s)
@@ -241,7 +241,7 @@ If there is a prolog, spacer-images you don't want to delete or the chapter star
 ## Advanced book
 
 Your source-files have to be located in "comic_manga/source_dir" (if you didn't specify a different one in the config-file), the book contents have to be in a subfolder "contents" and the cover-images have to be placed in the root.<br />
-The naming of the files and folders is up to you, but I suggest to use either my format or at least numeric names/prefixes. You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
+The naming of the files and folders is up to you, but I suggest using either my format or at least numeric names/prefixes. You can mix chapters and images like you want and can have as many levels of subfolders like you want. 
 
 - the file- and folder-names are sorted alphanumeric
 - files and folders starting with "__" (2 underscores) are ignored in general
@@ -275,7 +275,7 @@ source_dir/
 - `invoke init pro "[MY_BOOK_FOLDER]"`
 
 When you initialize a book a file named `book_config.json` will be generated in the source-folder of your book. <br />
-Its a great help, but if you want you can write it enterly on your own or generate it with an external program.<br />
+It is a great help, but if you want you can write it entirely on your own or generate it with an external program.<br />
 Init will parse the folder-names of your chapters. If there is a name after the prefix it will suggest it as  a label. If not, it will automatically name it `Chapter [NUMBER]` (if there is a chapter like "Bonus" in between the number won't be increased of course). The Regex for the prefix is: `^(chapter_|item_)?[0-9%_. +~-]+` (I guess you understand this, even if you are not a programmer).
 
 ### The difference to a simple book
