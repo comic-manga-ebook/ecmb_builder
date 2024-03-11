@@ -215,7 +215,7 @@ Init will parse the folder-names of your chapters. If there is a name after the 
 - open the git-console with right-click (like you have done before)
 - type `invoke init [TYPE] "[MY_BOOK_FOLDER]"` and press `[ENTER]`<br /><br/>
   ![git_init](docs/git_init.jpg)<br /><br />
-  Now the file `book_config.json` is in your book-folder<br /><br/>
+  Now the file `book_config.json` ([Example >>](docs/book_config.json)) is in your book-folder<br /><br/>
   ![init](docs/init.jpg)<br /><br />
 
 ### Prepare for build
