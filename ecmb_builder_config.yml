@@ -5,16 +5,16 @@ source_dir: ../source_dir/
 output_dir: ../output_dir/
 
 
-# resize-method for images which don't have the resize-size and stores it as webp to the *.ecmb when you build it
-# !!!! your source-files stay untouched !!!!
+# resize-method for images that don't have the resize-size. It will store them as webp to the *.ecmb when you build it
+# !!!! Your source files stay untouched !!!!
 # available methods:
 # - none: does nothing to your files
-# - max: resizes the images with it's aspect-ratio to fit in the resize box
-# -      - good for minimize the file-size of your *.ecmb
-# - stretch: strechtes the image to the resize-size, the image will lose its original aspect-ratio
-# - cover: will resize the image to the box with its original aspect-ratio and cut off the overhanging parts
-# - cropmax: crops the white borders on the x-axis and then resizes the images with it's aspect-ratio to fit in the resize box.
-#            - good for downloaded images which often have wired borders. A single grey dot (from the scanning-process) can disturb doing this.
+# - max: resizes the images with their aspect ratio to fit in the resize box
+#     - good for minimizing the file size of your *.ecmb
+# - stretch: stretches the images to the resize-size, the images will lose their original aspect ratio
+# - cover: will resize the images to the box with their original aspect ratio and cut off the overhanging parts
+# - cropmax: crops the white borders on the x-axis and then resizes the images with their aspect ratio to fit in the resize box.
+#    - good for downloaded images, which often have wired borders. A single gray dot (from the scanning process) can disturb doing this, so it won't work 100%
 default_resize_method: max
 
 # max 1800
@@ -26,19 +26,19 @@ default_resize_height: 1200
 # highest compression is 0, 100 for lossless
 default_webp_compression: 75
 
-# compress all images with webp, even if they are not resized stores to the *.ecmb when you build it
-# !!!! your source-files stay untouched !!!!
-# good for minimize the file-size of your *.ecmb
+# compress all images with webp, even if they are not resized
+# !!!! Your source files stay untouched !!!!
+# good for minimizing the file size of your *.ecmb
 # avaliable values
 # - true
 # - false
 default_compress_all: true
 
-# available types: 
+# available values: 
 # - manga
 # - comic
 default_book_type: manga
 
 
-# ISO 639-1 language-code
+# ISO 639-1 language-code (https://localizely.com/iso-639-1-list/)
 default_book_language: en

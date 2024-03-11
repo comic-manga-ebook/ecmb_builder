@@ -412,6 +412,7 @@ class ecmbBuilderBookConfig():
         }
 
         if  pro_folders:
+            chapter_template['start_with'] = ''
             book_config['navigation'] = self._init_navigation_recursive(chapter_template, pro_folders, '')
             
         elif volume_folders:
