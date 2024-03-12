@@ -26,7 +26,7 @@
 import re, os, json
 from .ecmb_builder_enums import *
 from .ecmb_builder_config import ecmbBuilderConfig
-from ecmblib import ecmbUtils, ecmbException, BOOK_TYPE, BASED_ON_TYPE, CONTENT_WARNING, AUTHOR_ROLE, EDITOR_ROLE
+from ecmblib import ecmbUtils, ecmbException, BOOK_TYPE, BASED_ON_TYPE, CONTENT_WARNING, AUTHOR_ROLE, EDITOR_ROLE, LANGUAGES_LIST
 
 
 class ecmbBuilderBookConfig():
@@ -143,7 +143,7 @@ class ecmbBuilderBookConfig():
             ecmbUtils.validate_int(True, 'builder-config -> resize_height', config['builder-config'].get('resize_height'), 100, 2400)
             ecmbUtils.validate_int(True, 'builder-config -> webp_compression', config['builder-config'].get('webp_compression'), 0, 100)
             ecmbUtils.validate_enum(True, 'required -> type', config['required'].get('type'), BOOK_TYPE)
-            ecmbUtils.validate_regex(True, 'required -> language', config['required'].get('language'), r'^[a-z]{2}$')
+            ecmbUtils.validate_enum(True, 'required -> language', config['required'].get('language'), LANGUAGES_LIST)
             ecmbUtils.validate_not_empty_str(True, 'required -> title', config['required'].get('title'))
 
             if type(config.get('volumes')) == list:
