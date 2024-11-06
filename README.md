@@ -7,6 +7,7 @@
 - [Installation](#installation)
 - [The source-files (in a perfect world)](#the-source-files-in-a-perfect-world)
   - [Cover-Images](#cover-images)
+  - [Demo source-files](#demo-source-files)
 - [The source-files (in real life)](#the-source-files-in-real-life)
 - [Using the file-cleaner](#using-the-file-cleaner)
   - [Available functions](#available-functions)
@@ -125,6 +126,10 @@ If you have cover-images they have to have one of these names:
 <br/>
 
 **Note!** If you have many books in your source-folder you can organize them in subfolders<br /><br />
+
+### Demo source-files
+
+You can [download demo source-files here](https://github.com/comic-manga-ebook/ecmb_builder/raw/refs/heads/master/docs/demo_source_files.zip) to play around with the builder (and file-cleaner)
 
 ## The source-files (in real life)
 ![Chapters](docs/chapters.jpg)
